@@ -52,6 +52,7 @@ namespace BHS.PLCSimulator
         #endregion
 
         #region AbstractTelegram Constructor, Dispose, Finalize and Destructor
+
         public AbstractTelegram(string tel_Alias)
         {
             Init_AbstractTelegram(tel_Alias);
@@ -284,11 +285,7 @@ namespace BHS.PLCSimulator
                         fieldvalue = Util.DecByteStrToArray(defaultvalue);
                     }
                 }
-                //int i;
-                //for (i = 0; i < length; i++)
-                //{
-                //    m_RawData[offset + i] = fieldvalue[i];
-                //}
+
                 Array.Copy(fieldvalue, 0, m_RawData, offset, length);
                 return true;
             }

@@ -20,9 +20,12 @@ namespace BHS.PLCSimulator
         private const string XML_CFG_FIELD_ATTRIBUTE_LENGTH = "length";
         private const string XML_CFG_FIELD_ATTRIBUTE_DEFAULT = "default";
 
+        private const string XML_CFG_FIELD_ATTRIBUTE_DATATYPE = "datatype";
+        private const string XML_CFG_FIELD_ATTRIBUTE_SHOWLENGTH = "showlength";
+
         // FieldFormat Collection
         // key is fieldname, value is FieldForamt Object
-        private Hashtable HT_FieldList; 
+        public Hashtable HT_FieldList; 
 
         private string m_telegram_type;
         private string m_telegram_name;
@@ -66,6 +69,7 @@ namespace BHS.PLCSimulator
         {
             int i;
             string name, offset, length, f_default;
+            string datatype, showlength;
 
             HT_FieldList = new Hashtable();
 
@@ -92,15 +96,25 @@ namespace BHS.PLCSimulator
                             length = XMLConfig.GetSettingFromAttribute(temp_nodefield, XML_CFG_FIELD_ATTRIBUTE_LENGTH, "nolength");
                             f_default = XMLConfig.GetSettingFromAttribute(temp_nodefield, XML_CFG_FIELD_ATTRIBUTE_DEFAULT, "?");
 
-                            if (name == "noname" || offset == "nooffset" || length == "nolength")
+                            datatype = XMLConfig.GetSettingFromAttribute(temp_nodefield, XML_CFG_FIELD_ATTRIBUTE_DATATYPE, "unknown");
+                            showlength = XMLConfig.GetSettingFromAttribute(temp_nodefield, XML_CFG_FIELD_ATTRIBUTE_SHOWLENGTH, "unknown");
+
+                            if (name == "noname" || offset == "nooffset" || length == "nolength" || datatype == "unknown" || showlength == "unknown")
                             {
-                                string errorstring = "Field set problems,Telegram: " + this.m_telegram_alias + "NAME--" + name + " OFFSET--" + offset + " LENGTH--" + length + " DEFAULT--" + f_default;
+                                string errorstring = "Field set problems,Telegram: "
+                                    + this.m_telegram_alias
+                                    + "NAME--" + name
+                                    + " OFFSET--" + offset
+                                    + " LENGTH--" + length
+                                    + " DEFAULT--" + f_default
+                                    + " Datatype--" + datatype
+                                    + " ShowLength--" + showlength;
                                 _logger.Error(errorstring);
                                 throw new Exception("errorstring");
                             }
                             else
                             {
-                                FieldFormat temp_format = new FieldFormat(name, offset, length, f_default);
+                                FieldFormat temp_format = new FieldFormat(name, offset, length, f_default, datatype, showlength);
                                 HT_FieldList.Add(temp_format.FieldName, temp_format);
                             }
                         }
@@ -112,33 +126,6 @@ namespace BHS.PLCSimulator
                 }
             }
         }
-
-        //public void TestFormat_ICR(string telegram_alias)
-        //{
-        //    if (telegram_alias == "ICR")
-        //    {
-              
-        //        FieldFormat icr_type = new FieldFormat("TLG_TYPE", "0", "4", "48,48,48,52");
-        //        FieldFormat icr_length = new FieldFormat("TLG_LEN", "4", "4", "48,48,50,50");
-        //        FieldFormat icr_Seqno = new FieldFormat("TLG_SEQ", "8", "4", "?");
-        //        FieldFormat icr_gidmsb = new FieldFormat("GID_MSB", "12", "1", "?");
-        //        FieldFormat icr_gidlsb = new FieldFormat("GID_LSB", "13", "4", "?");
-        //        FieldFormat icr_location = new FieldFormat("LOCATION", "17", "2", "?");
-        //        FieldFormat icr_scrlvl = new FieldFormat("SCR_LVL", "19", "1", "?");
-        //        FieldFormat icr_scrres = new FieldFormat("SCR_RES", "20", "1", "?");
-        //        FieldFormat icr_plcidx = new FieldFormat("PLC_IDX", "21", "1", "?");
-
-        //        HT_FieldList.Add(icr_type.FieldName, icr_type);
-        //        HT_FieldList.Add(icr_length.FieldName, icr_length);
-        //        HT_FieldList.Add(icr_Seqno.FieldName, icr_Seqno);
-        //        HT_FieldList.Add(icr_gidmsb.FieldName, icr_gidmsb);
-        //        HT_FieldList.Add(icr_gidlsb.FieldName, icr_gidlsb);
-        //        HT_FieldList.Add(icr_location.FieldName, icr_location);
-        //        HT_FieldList.Add(icr_scrlvl.FieldName, icr_scrlvl);
-        //        HT_FieldList.Add(icr_scrres.FieldName, icr_scrres);
-        //        HT_FieldList.Add(icr_plcidx.FieldName, icr_plcidx);
-        //    }
-        //}
 
         public void ConstructFormat(string telegram_type)
         {
@@ -176,80 +163,6 @@ namespace BHS.PLCSimulator
             return HT_FieldList.ContainsKey(fieldname);
         }
 
-        //public int GetOffset(string fieldname)
-        //{
-        //    int offset = init_value;
-        //    if (this.HT_FieldList.ContainsKey(fieldname))
-        //    {
-        //        FieldFormat temp_format = HT_FieldList[fieldname] as FieldFormat;
-        //        try
-        //        {
-        //            offset = int.Parse(temp_format.Offset);
-        //        }
-        //        catch (FormatException exp)
-        //        {
-        //            Console.WriteLine("TelegramFormat: " + m_telegram_alias);
-        //            Console.WriteLine("Offset is not a integer. Offset: " + temp_format.Offset);
-        //            Console.WriteLine(exp.ToString());
-        //        }
-        //        catch (Exception exp)
-        //        {
-        //            Console.WriteLine(exp.ToString());
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("wrong filed name: " + fieldname + " in TelegramFormat: " + m_telegram_alias);
-        //    }
-        //    return offset;
-        //}
-
-        //public int GetLength(string fieldname)
-        //{
-        //    int length = init_value;
-
-        //    if (this.HT_FieldList.ContainsKey(fieldname))
-        //    {
-        //        FieldFormat temp_format = HT_FieldList[fieldname] as FieldFormat;
-        //        try
-        //        {
-        //            length = int.Parse(temp_format.FieldLength);
-        //        }
-        //        catch (FormatException exp)
-        //        {
-        //            Console.WriteLine("TelegramFormat: " + m_telegram_alias);
-        //            Console.WriteLine("Length is not a integer. Length: " + temp_format.FieldLength);
-        //            Console.WriteLine(exp.ToString());
-        //        }
-        //        catch (Exception exp)
-        //        {
-        //            Console.WriteLine(exp.ToString());
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("wrong filed name: " + fieldname + " in TelegramFormat: " + m_telegram_alias);
-        //    }
-        //    return length;
-        //}
-
-        //public string GetDefaultValue(string fieldname)
-        //{
-        //    string default_value = "";
-
-        //    if (this.HT_FieldList.ContainsKey(fieldname))
-        //    {
-        //        FieldFormat temp_format = HT_FieldList[fieldname] as FieldFormat;
-        //        default_value = temp_format.DefaultValue;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("Wrong filed name: " + fieldname + " in TelegramFormat: " + m_telegram_alias);
-        //    }
-
-        //    return default_value;
-        //}
-
         public string GetAttributeValue(string fieldname, string attribute)
         {
             string attr_value = "";
@@ -257,22 +170,44 @@ namespace BHS.PLCSimulator
             if (this.HT_FieldList.ContainsKey(fieldname))
             {
                 FieldFormat temp_format = HT_FieldList[fieldname] as FieldFormat;
-                if (attribute == XML_CFG_FIELD_ATTRIBUTE_OFFSET)
+                switch (attribute)
                 {
-                    attr_value = temp_format.Offset;
+                    case XML_CFG_FIELD_ATTRIBUTE_OFFSET:
+                        attr_value = temp_format.Offset;
+                        break;
+                    case XML_CFG_FIELD_ATTRIBUTE_LENGTH:
+                        attr_value = temp_format.FieldLength;
+                        break;
+                    case XML_CFG_FIELD_ATTRIBUTE_DEFAULT:
+                        attr_value = temp_format.DefaultValue;
+                        break;
+                    case XML_CFG_FIELD_ATTRIBUTE_DATATYPE:
+                        attr_value = temp_format.DataType;
+                        break;
+                    case XML_CFG_FIELD_ATTRIBUTE_SHOWLENGTH:
+                        attr_value = temp_format.ShowLength;
+                        break;
+                    default:
+                        Console.WriteLine("Unkown Attribute:" + attribute + " in Field:" + fieldname + "in TelegramFormat:" + this.m_telegram_alias);
+                        break;
                 }
-                else if(attribute==XML_CFG_FIELD_ATTRIBUTE_LENGTH)
-                {
-                    attr_value = temp_format.FieldLength;
-                }
-                else if (attribute == XML_CFG_FIELD_ATTRIBUTE_DEFAULT)
-                {
-                    attr_value = temp_format.DefaultValue;
-                }
-                else
-                {
-                    Console.WriteLine("Unkown Attribute:" + attribute + " in Field:" + fieldname + "in TelegramFormat:" + this.m_telegram_alias);
-                }
+
+                //if (attribute == XML_CFG_FIELD_ATTRIBUTE_OFFSET)
+                //{
+                //    attr_value = temp_format.Offset;
+                //}
+                //else if(attribute==XML_CFG_FIELD_ATTRIBUTE_LENGTH)
+                //{
+                //    attr_value = temp_format.FieldLength;
+                //}
+                //else if (attribute == XML_CFG_FIELD_ATTRIBUTE_DEFAULT)
+                //{
+                //    attr_value = temp_format.DefaultValue;
+                //}
+                //else
+                //{
+                //    Console.WriteLine("Unkown Attribute:" + attribute + " in Field:" + fieldname + "in TelegramFormat:" + this.m_telegram_alias);
+                //}
             }
             else
             {

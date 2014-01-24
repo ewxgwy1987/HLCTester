@@ -57,9 +57,11 @@
     <Compile Include="PLCSimulator\Messages\Handlers\PLC2GWSessionForward.cs" />
     <Compile Include="PLCSimulator\Configure\XmlSettingLoader.cs" />
     <Compile Include="PLCSimulator\Messages\TelegramFormat\FieldFormat.cs" />
+    <Compile Include="PLCSimulator\Messages\TelegramFormat\FieldValue.cs" />
     <Compile Include="PLCSimulator\Messages\TelegramFormat\TelegramFormat.cs" />
     <Compile Include="PLCSimulator\Messages\TelegramFormat\TelegramFormatList.cs" />
     <Compile Include="PLCSimulator\Messages\TelegramFormat\TelegramTypeName.cs" />
+    <Compile Include="PLCSimulator\Messages\Telegram\00.General_Telegram.cs" />
     <Compile Include="PLCSimulator\Messages\Telegram\01.CRQ_Telegram.cs" />
     <Compile Include="PLCSimulator\Messages\Telegram\02.CCF_Telegram.cs" />
     <Compile Include="PLCSimulator\Messages\Telegram\03.GID_USED_Telegram.cs" />

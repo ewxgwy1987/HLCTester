@@ -40,7 +40,7 @@
   </log4net>
 
   <configSet name="GlobalContext">
-    <appName>SCPLCEM1</appName>
+    <appName>PLCEM1</appName>
     <company>PterisGlobal</company>
     <department>CSI</department>
     <author>Guo Wenyu</author>

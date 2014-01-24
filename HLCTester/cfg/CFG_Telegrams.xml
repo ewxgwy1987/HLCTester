@@ -357,17 +357,17 @@
         <field name="TYPE" offset="19" length="1" default="?"/>
       </telegram>
       <telegram alias="ICR" name="Item_Screened_Message" sequence="True" acknowledge="False">
-        <field name="Type" offset="0" length="4" default="48,48,48,52"/>
+        <field name="Type" offset="0" length="4" default="48,48,48,52" datatype="string" showlength="4"/>
         <!--0004-->
-        <field name="Length" offset="4" length="4" default="48,48,50,51"/>
+        <field name="Length" offset="4" length="4" default="48,48,50,51" datatype="string" showlength="4"/>
         <!--0023-->
-        <field name="Sequence" offset="8" length="4" default="?"/>
-        <field name="GID_MSB" offset="12" length="1" default="?"/>
-        <field name="GID_LSB" offset="13" length="4" default="?"/>
-        <field name="LOCATION" offset="17" length="2" default="?"/>
-        <field name="SCR_LVL" offset="19" length="1" default="?"/>
-        <field name="SCR_RES" offset="20" length="1" default="?"/>
-        <field name="PLC_IDX" offset="21" length="2" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?" datatype="uint" showlength="10"/>
+        <field name="GID_MSB" offset="12" length="1" default="?" datatype="byte" showlength="2"/>
+        <field name="GID_LSB" offset="13" length="4" default="?" datatype="uint" showlength="8"/>
+        <field name="LOCATION" offset="17" length="2" default="?" datatype="ushort" showlength="5"/>
+        <field name="SCR_LVL" offset="19" length="1" default="?" datatype="byte" showlength="1"/>
+        <field name="SCR_RES" offset="20" length="1" default="?" datatype="byte" showlength="2"/>
+        <field name="PLC_IDX" offset="21" length="2" default="?" datatype="ushort" showlength="5"/>
       </telegram>
       <telegram alias="ISC" name="Item_Scanned_Message" sequence="True" acknowledge="False">
         <field name="Type" offset="0" length="4" default="48,48,48,53"/>

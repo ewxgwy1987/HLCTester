@@ -16,3 +16,17 @@ F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester
 D:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\bin\Debug\HLCTester.exe.config
 D:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\obj\x86\Debug\HLCTester.exe
 D:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\obj\x86\Debug\HLCTester.pdb
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\HLCTester.exe.config
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\HLCTester.exe
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\HLCTester.pdb
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\BHS.dll
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\log4net.dll
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\PALS.Configure.dll
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\PALS.dll
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\bin\Debug\BHS.pdb
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\obj\x86\Debug\HLCTester.csprojResolveAssemblyReference.cache
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\obj\x86\Debug\HLCTester.Form1.resources
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\obj\x86\Debug\HLCTester.Properties.Resources.resources
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\obj\x86\Debug\HLCTester.csproj.GenerateResource.Cache
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\obj\x86\Debug\HLCTester.exe
+D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\obj\x86\Debug\HLCTester.pdb

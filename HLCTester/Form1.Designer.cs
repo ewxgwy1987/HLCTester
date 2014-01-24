@@ -48,9 +48,9 @@
             // 
             // btSentGW
             // 
-            this.btSentGW.Location = new System.Drawing.Point(606, 83);
+            this.btSentGW.Location = new System.Drawing.Point(606, 90);
             this.btSentGW.Name = "btSentGW";
-            this.btSentGW.Size = new System.Drawing.Size(75, 30);
+            this.btSentGW.Size = new System.Drawing.Size(75, 36);
             this.btSentGW.TabIndex = 3;
             this.btSentGW.Text = ">> Sent2GW";
             this.btSentGW.UseVisualStyleBackColor = true;
@@ -61,10 +61,10 @@
             this.lbCommGW.AutoSize = true;
             this.lbCommGW.BackColor = System.Drawing.Color.Red;
             this.lbCommGW.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbCommGW.Location = new System.Drawing.Point(606, 55);
-            this.lbCommGW.MinimumSize = new System.Drawing.Size(75, 25);
+            this.lbCommGW.Location = new System.Drawing.Point(606, 60);
+            this.lbCommGW.MinimumSize = new System.Drawing.Size(75, 27);
             this.lbCommGW.Name = "lbCommGW";
-            this.lbCommGW.Size = new System.Drawing.Size(75, 25);
+            this.lbCommGW.Size = new System.Drawing.Size(75, 27);
             this.lbCommGW.TabIndex = 4;
             this.lbCommGW.Text = "CommGW";
             this.lbCommGW.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -73,21 +73,21 @@
             // 
             this.tbxMsgLog.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
             this.tbxMsgLog.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbxMsgLog.Location = new System.Drawing.Point(0, 200);
+            this.tbxMsgLog.Location = new System.Drawing.Point(0, 217);
             this.tbxMsgLog.Multiline = true;
             this.tbxMsgLog.Name = "tbxMsgLog";
             this.tbxMsgLog.ReadOnly = true;
             this.tbxMsgLog.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbxMsgLog.Size = new System.Drawing.Size(700, 200);
+            this.tbxMsgLog.Size = new System.Drawing.Size(700, 217);
             this.tbxMsgLog.TabIndex = 6;
             // 
             // cbxTelegramList
             // 
             this.cbxTelegramList.CheckOnClick = true;
             this.cbxTelegramList.FormattingEnabled = true;
-            this.cbxTelegramList.Location = new System.Drawing.Point(0, 58);
+            this.cbxTelegramList.Location = new System.Drawing.Point(0, 63);
             this.cbxTelegramList.Name = "cbxTelegramList";
-            this.cbxTelegramList.Size = new System.Drawing.Size(167, 116);
+            this.cbxTelegramList.Size = new System.Drawing.Size(167, 124);
             this.cbxTelegramList.TabIndex = 6;
             this.cbxTelegramList.SelectedIndexChanged += new System.EventHandler(this.cbxTelegramList_SelectedIndexChanged);
             // 
@@ -95,12 +95,12 @@
             // 
             this.tbxMsgContent.BackColor = System.Drawing.Color.White;
             this.tbxMsgContent.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.tbxMsgContent.Location = new System.Drawing.Point(174, 58);
+            this.tbxMsgContent.Location = new System.Drawing.Point(174, 63);
             this.tbxMsgContent.Multiline = true;
             this.tbxMsgContent.Name = "tbxMsgContent";
             this.tbxMsgContent.ReadOnly = true;
             this.tbxMsgContent.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.tbxMsgContent.Size = new System.Drawing.Size(426, 116);
+            this.tbxMsgContent.Size = new System.Drawing.Size(426, 126);
             this.tbxMsgContent.TabIndex = 6;
             // 
             // lbMsgContent
@@ -108,11 +108,11 @@
             this.lbMsgContent.AutoSize = true;
             this.lbMsgContent.BackColor = System.Drawing.SystemColors.Control;
             this.lbMsgContent.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.lbMsgContent.Location = new System.Drawing.Point(172, 32);
-            this.lbMsgContent.MaximumSize = new System.Drawing.Size(50, 60);
-            this.lbMsgContent.MinimumSize = new System.Drawing.Size(150, 20);
+            this.lbMsgContent.Location = new System.Drawing.Point(172, 35);
+            this.lbMsgContent.MaximumSize = new System.Drawing.Size(50, 65);
+            this.lbMsgContent.MinimumSize = new System.Drawing.Size(150, 22);
             this.lbMsgContent.Name = "lbMsgContent";
-            this.lbMsgContent.Size = new System.Drawing.Size(150, 20);
+            this.lbMsgContent.Size = new System.Drawing.Size(150, 22);
             this.lbMsgContent.TabIndex = 6;
             this.lbMsgContent.Text = "Message Content";
             this.lbMsgContent.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -122,20 +122,20 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label1.Location = new System.Drawing.Point(0, 177);
-            this.label1.MaximumSize = new System.Drawing.Size(50, 60);
-            this.label1.MinimumSize = new System.Drawing.Size(150, 20);
+            this.label1.Location = new System.Drawing.Point(0, 192);
+            this.label1.MaximumSize = new System.Drawing.Size(50, 65);
+            this.label1.MinimumSize = new System.Drawing.Size(150, 22);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(150, 20);
+            this.label1.Size = new System.Drawing.Size(150, 22);
             this.label1.TabIndex = 6;
             this.label1.Text = "App Log";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(703, 403);
+            this.ClientSize = new System.Drawing.Size(703, 437);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.lbMsgContent);
             this.Controls.Add(this.tbxMsgContent);
