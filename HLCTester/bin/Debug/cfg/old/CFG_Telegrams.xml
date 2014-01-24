@@ -1,0 +1,506 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <!--PALS Standard BHS Telegrams -->
+  <configSet name="Telegram_Formats">
+    <!--The "" or "?" shall be used if the value of attributes is not constant.-->
+    <!--The value of offset and length attributes is number of bytes -->
+    <!--The "acknowledge" indicates whether this message is the acknowledgement required message -->
+    <!--The "sequence" indicates whether this sequence field need to be assigned the new value before sent out -->
+    <!--The "alias" attribute of "telegram" node is constant value for all projects-->
+    <!--The "name" attribute of "field" node is constant value for all projects-->
+
+    <!-- RFC1006 -->
+    <telegramSet name="RFC1006_Telegrams">
+      <header alias="Header" name="RFC1006_TPKT_Header">
+        <field name="Version" offset="0" length="1" default="3"/>
+        <field name="Unused" offset="1" length="1" default="0"/>
+        <field name="Length" offset="2" length="2" default="?"/>
+        <field name="LI" offset="4" length="1" default="?"/>
+        <!--The value of CO: E0(CR telegram), D0(CC Telegram), F0(DT Telegram)-->
+        <field name="CO" offset="5" length="1" default="?"/>
+      </header>
+      <telegram alias="ISO_CR" name="RFC1006_Connection_Request_Telegram">
+        <field name="Version" offset="0" length="1" default="3"/>
+        <field name="Unused" offset="1" length="1" default="0"/>
+        <field name="Length" offset="2" length="2" default="?"/>
+        <field name="LI" offset="4" length="1" default="?"/>
+        <field name="CO" offset="5" length="1" default="224"/>
+        <field name="DST" offset="6" length="2" default="0,0"/>
+        <field name="SRC" offset="8" length="2" default="?"/>
+        <field name="CL" offset="10" length="1" default="0"/>
+        <!--c0: TPDU size. 2^10=1024-->
+        <field name="c0_TY" offset="11" length="1" default="192"/>
+        <field name="c0_LG" offset="12" length="1" default="1"/>
+        <field name="c0_VA" offset="13" length="1" default="10"/>
+        <!--c1: Calling TSAP, 1~8 characters-->
+        <field name="c1_TY" offset="14" length="1" default="193"/>
+        <field name="c1_LG" offset="15" length="1" default="?"/>
+        <field name="c1_VA" offset="16" length="?" default="?"/>
+        <!--c2: Called TSAP, 1~8 characters-->
+        <field name="c2_TY" offset="?" length="1" default="194"/>
+        <field name="c2_LG" offset="?" length="1" default="?"/>
+        <field name="c2_VA" offset="?" length="?" default="?"/>
+      </telegram>
+      <telegram alias="ISO_CC" name="RFC1006_Connection_Confirm_Telegram">
+        <field name="Version" offset="0" length="1" default="03"/>
+        <field name="Unused" offset="1" length="1" default="0"/>
+        <field name="Length" offset="2" length="2" default="?"/>
+        <field name="LI" offset="4" length="1" default="?"/>
+        <field name="CO" offset="5" length="1" default="208"/>
+        <field name="DST" offset="6" length="2" default="?"/>
+        <field name="SRC" offset="8" length="2" default="?"/>
+        <field name="CL" offset="10" length="1" default="0"/>
+        <!--c0: TPDU size. 2^10=1024-->
+        <field name="c0_TY" offset="11" length="1" default="192"/>
+        <field name="c0_LG" offset="12" length="1" default="1"/>
+        <field name="c0_VA" offset="13" length="1" default="10"/>
+        <!--c1: Calling TSAP, 1~8 characters-->
+        <field name="c1_TY" offset="14" length="1" default="193"/>
+        <field name="c1_LG" offset="15" length="1" default="?"/>
+        <field name="c1_VA" offset="16" length="?" default="?"/>
+        <!--c2: Called TSAP, 1~8 characters-->
+        <field name="c2_TY" offset="?" length="1" default="194"/>
+        <field name="c2_LG" offset="?" length="1" default="?"/>
+        <field name="c2_VA" offset="?" length="?" default="?"/>
+      </telegram>
+      <telegram alias="ISO_DT" name="RFC1006_Data_Transfer_Telegram">
+        <field name="Version" offset="0" length="1" default="3"/>
+        <field name="Unused" offset="1" length="1" default="0"/>
+        <field name="Length" offset="2" length="2" default="?"/>
+        <field name="LI" offset="4" length="1" default="2"/>
+        <field name="CO" offset="5" length="1" default="240"/>
+        <field name="ET" offset="6" length="1" default="128"/>
+        <field name="Data" offset="7" length="?" default="?"/>
+      </telegram>
+    </telegramSet>
+
+    <telegramSet name="Application_Telegrams">
+      <!-- Header - Message Header -->
+      <!-- Header - Message Header -->
+      <!-- 0001, CRQ  - Connection Request Message -->
+      <!-- 0002, CCF  - Connection Confirm Message -->
+      <!-- 0003, GID  - GID Generated Message -->
+      <!-- 0004, ICR  - Item Screened Message -->
+      <!-- 0005, ISC  - Item Scanned Message -->
+      <!-- 0006, IRD  - Item Redirect Message -->
+      <!-- 0007, ISE  - Item Sort Event Message -->
+      <!-- 0008, IPR  - Item Proceeded Message -->
+      <!-- 0009, ILT  - Item Lost Message -->
+      <!-- 0010, ITI  - Item Tracking Information Message -->
+      <!-- 0011, CSR  - Chute Status Request Message -->
+      <!-- 0012, CST  - Chute Status Reply Message -->
+      <!-- 0013, IDR  - Item Destination Request Message -->
+      <!-- 0014, LRQ  - Baggage License Plate Request Message -->
+      <!-- 0015, LRP  - Baggage License Plate Reply Message -->
+      <!-- 0016, MER  - Item Manual Encoding Request Message -->
+      <!-- 0017, AFAI - Airport Code and Function Allocation Information Message -->
+      <!-- 0018, BMAM - Baggage Measurement Array Message -->
+      <!-- 0019, CRAI - Carrier Allocation Information Message -->
+      <!-- 0020, FBTI - Fallback Tag Information Message -->
+      <!-- 0021, FPTI - Four Digits Pier Tag Information Message -->
+      <!-- 0022, TPTI - Two Digits Pier Tag Information Message -->
+      <!-- 0023, PV1K - PVP 1000 Information Message -->
+      <!-- 0024, BSDI - Bag Status Display Information Message -->
+      <!-- 0025, SSTI - Special Security Tag Information Message -->
+      <!-- 0026, IMSL - Item Minimum Security Level Message -->
+      <!-- 0027, MCML - Make-up Carousel and Chute Mapping List Message -->
+      <!-- 0028, ICCR - Item Customs Screened Message -->
+      <!-- 0029, SSTD - Special Security Tag Destination Message -->
+      <!-- 0030, AALI - Airline Allocation Information Message -->
+      <!-- 0090, SOL  - Sign-of-life (Keep-Alive) Message -->
+      <!-- 0091, TSYN	- Time Synchronizing Message -->
+      <!-- 0099, ACK - Acknowledge Message -->
+      <!-- 0101, SRQ - Running Status Request Message -->
+      <!-- 0102, SRP - Running Status Reply Message -->
+      <!-- 0103, INTM - Intermediate Message -->
+      <!-- 0104, STR - Service Start Command Message -->
+      <!-- 0105, STO - Service Stop Command Message -->
+      <!-- 0106, PCN - Parameter Change Notification Message -->
+      <!-- 0107, PNA - Parameter Change Notification Acknowledge Message -->
+      <!-- 0108, CSNF - Connection Status Notification Message -->
+      <!-- 0201, IRY - Item Ready Message -->
+      <!-- 0202, IEC - Item Encoded Message -->
+      <!-- 0203, IRM - Item Removed Message -->
+ 
+      <header alias="Header" name="App_Header" sequence="False" acknowledge="False">
+        <field name="Type" offset="0" length="4" default=""/>
+        <field name="Length" offset="4" length="4" default=""/>
+        <field name="Sequence" offset="8" length="4" default=""/>
+      </header>
+      <!-- "Type, Length" field of Application message is mandatory for APP class. -->
+      <telegram alias="CRQ" name="App_Connection_Request_Message" sequence="True" acknowledge="False">
+        <!-- value="48,48,48,49" - the ASCII value (decimal) string. -->
+        <!-- "48,48,48,49" here represents the default field value are -->
+        <!-- 4 bytes (H30 H30 H30 H31). The delimiter must be comma(,). -->
+        <field name="Type" offset="0" length="4" default="48,48,48,49"/>
+        <field name="Length" offset="4" length="4" default="48,48,50,48"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="ClientAppCode" offset="12" length="8" default="?"/>
+      </telegram>
+      <telegram alias="CCF" name="App_Connection_Confirm_Message" sequence="False" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,50"/>
+        <field name="Length" offset="4" length="4" default="48,48,50,48"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="ClientAppCode" offset="12" length="8" default="?"/>
+      </telegram>
+      <telegram alias="GID" name="GID_Used_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,51"/>
+        <field name="Length" offset="4" length="4" default="48,48,53,56"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="BagType" offset="52" length="2" default="?"/>
+        <field name="IndexNo" offset="54" length="4" default="?"/>        
+      </telegram>      
+      <telegram alias="ICR" name="Item_Screened_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,52"/>
+        <field name="Length" offset="4" length="4" default="48,48,55,57"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="XRayID" offset="62" length="10" default="?"/>
+        <field name="HBSLevel" offset="72" length="2" default="?"/>
+        <field name="HBSResult" offset="74" length="1" default="?"/>
+        <field name="IndexNo" offset="75" length="4" default="?"/>
+      </telegram>  
+      <telegram alias="ISC" name="Item_Scanned_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,53"/>
+        <field name="Length" offset="4" length="4" default="48,49,48,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate1" offset="52" length="10" default="?"/>
+        <field name="LicensePlate2" offset="62" length="10" default="?"/>
+        <field name="LicensePlate3" offset="72" length="10" default="?"/>        
+        <field name="ScannerID" offset="82" length="10" default="?"/>
+        <field name="ScannerHead" offset="92" length="8" default="?"/>
+        <field name="ScanStatus" offset="100" length="2" default="?"/>
+        <field name="IndexNo" offset="102" length="4" default="?"/>        
+      </telegram>
+      <telegram alias="IRD" name="Item_Redirect_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,54"/>
+        <field name="Length" offset="4" length="4" default="48,48,56,48"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem1" offset="12" length="10" default="?"/>
+        <field name="Destination1" offset="22" length="4" default="?"/>
+        <field name="SubSystem2" offset="26" length="10" default="?"/>
+        <field name="Destination2" offset="36" length="4" default="?"/>
+        <field name="SubSystem3" offset="40" length="10" default="?"/>
+        <field name="Destination3" offset="50" length="4" default="?"/>
+        <field name="GID" offset="54" length="10" default="?"/>
+        <field name="LicensePlate" offset="64" length="10" default="?"/>
+        <field name="IndexNo" offset="74" length="4" default="?"/>        
+        <field name="Reason" offset="78" length="2" default="?"/>
+      </telegram>
+      <!--<telegram alias="ISE" name="Item_Sortation_Event_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,55"/>
+        <field name="Length" offset="4" length="4" default="48,48,56,52"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="Destination" offset="42" length="20" default="?"/>
+        <field name="GID" offset="62" length="10" default="?"/>
+        <field name="LicensePlate" offset="72" length="10" default="?"/>
+        <field name="Event" offset="82" length="2" default="?"/>
+      </telegram>-->      
+      <telegram alias="IPR" name="Item_Proceeded_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,56"/>
+        <field name="Length" offset="4" length="4" default="48,48,56,52"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>        
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="Destination" offset="62" length="20" default="?"/>
+        <field name="ProceedType" offset="82" length="2" default="?"/>
+      </telegram>
+      <telegram alias="ILT" name="Item_Lost_Tracking_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,48,57"/>
+        <field name="Length" offset="4" length="4" default="48,48,54,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+      </telegram>
+      <telegram alias="ITI" name="Item_Tracking_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,49,48"/>
+        <field name="Length" offset="4" length="4" default="48,48,55,48"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="TimeStamp" offset="62" length="8" default="?"/>
+      </telegram>      
+      <!--<telegram alias="MER" name="Item_Manual_Encoding_Request_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,49,54"/>
+        <field name="Length" offset="4" length="4" default="48,49,48,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="Airline" offset="62" length="3" default="?"/>
+        <field name="FlightNumber" offset="65" length="5" default="?"/>
+        <field name="SDO" offset="70" length="10" default="?"/>
+        <field name="Destination" offset="80" length="20" default="?"/>
+        <field name="Event" offset="100" length="2" default="?"/>
+      </telegram>   -->
+      <telegram alias="ACLI" name="Airport_Code_Location_Info_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,49,55"/>
+        <field name="Length" offset="4" length="4" default="48,48,51,54"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="AirportCode" offset="12" length="4" default="?"/>
+        <field name="DefaultMinimumSecurityLevel" offset="16" length="1" default="?"/>
+        <field name="FirstDigitSecurityTag" offset="17" length="1" default="?"/>
+        <field name="FirstDigitFourDigitsFallbackTag" offset="18" length="1" default="?"/>
+        <field name="MES1" offset="19" length="4" default="?"/>
+        <field name="MES2" offset="23" length="4" default="?"/>
+        <field name="EDS" offset="27" length="4" default="?"/>
+        <field name="CDS" offset="31" length="4" default="?"/>
+        <field name="BCAS" offset="35" length="1" default="?"/>
+      </telegram>     
+      <telegram alias="BMAM" name="Baggage_Measurement_Array_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,49,56"/>
+        <field name="Length" offset="4" length="4" default="48,48,54,52"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="BMASource" offset="22" length="20" default="?"/> 
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="BMAType" offset="62" length="2" default="?"/>     
+      </telegram>        
+      <!--<telegram alias="CRAI" name="Carrier_Allocation_Information_Message" sequence="True" acknowledge="True">
+        <field name="Type" offset="0" length="4" default="48,48,49,57"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfCarrier" offset="12" length="2" default="?"/>
+        <field name="CarrierCode" offset="14" length="3" default="?"/>
+        <field name="Destination" offset="17" length="10" default="?"/>
+        <field name="ReassignDest" offset="27" length="10" default="?"/>     
+      </telegram>-->          
+      <telegram alias="FBTI" name="Fallback_Tag_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,48"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfFallback" offset="12" length="2" default="?"/>
+        <field name="FallbackCode" offset="14" length="2" default="?"/>
+        <field name="Destination1" offset="16" length="4" default="?"/>
+        <field name="Destination2" offset="20" length="4" default="?"/>
+        <field name="FlightType" offset="24" length="1" default="?"/>        
+      </telegram>  
+      <telegram alias="FPTI" name="Four_Digits_Pier_Tag_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,49"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfFourPier" offset="12" length="2" default="?"/>
+        <field name="FourPierCode" offset="14" length="4" default="?"/>
+        <field name="Destination1" offset="18" length="4" default="?"/>
+        <field name="Destination2" offset="22" length="4" default="?"/>
+        <field name="FlightType" offset="26" length="1" default="?"/>
+      </telegram>
+      <!--<telegram alias="TPTI" name="Two_Digits_Pier_Tag_Information_Message" sequence="True" acknowledge="True">
+        <field name="Type" offset="0" length="4" default="48,48,50,50"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfTwoPier" offset="12" length="2" default="?"/>
+        <field name="TwoPierCode" offset="14" length="2" default="?"/>
+        <field name="Destination" offset="16" length="10" default="?"/>   
+      </telegram>  
+      <telegram alias="PV1K" name="PVP1000_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,51"/>
+        <field name="Length" offset="4" length="4" default="48,48,52,54"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="GID" offset="12" length="10" default="?"/>
+        <field name="LicensePlate" offset="22" length="10" default="?"/>
+        <field name="XRayID" offset="32" length="10" default="?"/>       
+        <field name="Status" offset="42" length="2" default="?"/>
+        <field name="Reason" offset="44" length="14" default="?"/>   
+      </telegram>
+      <telegram alias="BSDI" name="Bag_Status_Display_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,52"/>
+        <field name="Length" offset="4" length="4" default="48,48,54,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="GID" offset="12" length="10" default="?"/>
+        <field name="LicensePlate" offset="22" length="10" default="?"/>
+        <field name="BDSSource" offset="32" length="10" default="?"/>       
+        <field name="TimeStamp" offset="42" length="18" default="?"/>
+        <field name="Status" offset="60" length="2" default="?"/>   
+      </telegram>-->
+      <telegram alias="SSTL" name="Special_Security_Tag_Level_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,53"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfTag" offset="12" length="2" default="?"/>
+        <field name="FistTwoDigits" offset="14" length="2" default="?"/>
+        <field name="Level" offset="16" length="1" default="?"/>
+      </telegram>
+      <telegram alias="IMSL" name="Item_Minimum_Security_Level_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,54"/>
+        <field name="Length" offset="4" length="4" default="48,48,51,57"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="GID" offset="12" length="10" default="?"/>
+        <field name="LicensePlate" offset="22" length="10" default="?"/>
+        <field name="Level" offset="32" length="1" default="?"/>
+        <field name="IndexNo" offset="33" length="4" default="?"/>
+        <field name="FlightType" offset="37" length="1" default="?"/>
+        <field name="TagPosition" offset="38" length="1" default="?"/>
+      </telegram>
+      <telegram alias="MCML" name="Makeup_Carousel_And_Chute_Mapping_List_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,55"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfMapping" offset="12" length="2" default="?"/>
+        <field name="Makeup" offset="14" length="10" default="?"/>
+        <field name="Chute" offset="24" length="10" default="?"/>
+      </telegram>
+      <telegram alias="ICCR" name="Item_Customs_Screened_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,56"/>
+        <field name="Length" offset="4" length="4" default="48,48,54,51"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="Result" offset="62" length="1" default="?"/>
+      </telegram>
+      <telegram alias="SSTD" name="Special_Security_Tag_Destination_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,50,57"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfTag" offset="12" length="2" default="?"/>
+        <field name="LastTwoDigits" offset="14" length="2" default="?"/>
+        <field name="Destination1" offset="16" length="4" default="?"/>
+        <field name="Destination2" offset="20" length="4" default="?"/>
+        <field name="FlightType" offset="24" length="1" default="?"/>
+      </telegram>
+      <telegram alias="AALI" name="Airline_Allocation_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,51,48"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="NoOfAirline" offset="12" length="2" default="?"/>
+        <field name="TicketingCode" offset="14" length="3" default="?"/>
+        <field name="Destination1" offset="17" length="4" default="?"/>
+        <field name="Destination2" offset="21" length="4" default="?"/>
+        <field name="Destination3" offset="25" length="4" default="?"/>
+        <field name="Destination4" offset="29" length="4" default="?"/>        
+      </telegram>
+      <telegram alias="HACI" name="HBS_And_Customs_Information_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,51,49"/>
+        <field name="Length" offset="4" length="4" default="48,48,51,56"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="GID" offset="12" length="10" default="?"/>
+        <field name="LicensePlate" offset="22" length="10" default="?"/>
+        <field name="IndexNo" offset="32" length="4" default="?"/>
+        <field name="HBSResult" offset="36" length="1" default="?"/>
+        <field name="CustomsResult" offset="37" length="1" default="?"/>
+      </telegram>
+      <telegram alias="SOL" name="SignOfLife_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,57,48"/>
+        <field name="Length" offset="4" length="4" default="48,48,49,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+      </telegram>
+      <telegram alias="TSYN" name="TimeSynchronizing_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,57,49"/>
+        <field name="Length" offset="4" length="4" default="48,48,50,48"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="DateTime" offset="12" length="8" default="?"/>
+      </telegram>  
+      <telegram alias="ACK" name="Acknowledge_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,48,57,57"/>
+        <field name="Length" offset="4" length="4" default="48,48,49,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+      </telegram>
+      <telegram alias="SRQ" name="Status_Request_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,49,48,49"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="Class" offset="12" length="?" default="?"/>
+      </telegram>
+      <telegram alias="SRP" name="Status_Reply_Message" sequence="False" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,49,48,50"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="Status" offset="12" length="?" default="?"/>
+      </telegram>
+      <telegram alias="INTM" name="Intermediate_Message" sequence="True" acknowledge="True">
+        <field name="Type" offset="0" length="4" default="48,49,48,51"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="Sender" offset="12" length="8" default="?"/>
+        <field name="Receiver" offset="20" length="8" default="?"/>
+        <field name="OriginMsgType" offset="28" length="4" default="?"/>
+        <field name="OriginMsg" offset="32" length="?" default="?"/>
+      </telegram>
+      <telegram alias="STR" name="Service_Start_Command_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,49,48,52"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="Services" offset="12" length="?" default="?"/>
+      </telegram>  
+      <telegram alias="STO" name="Service_Stop_Command_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,49,48,53"/>
+        <field name="Length" offset="4" length="4" default="?"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="Services" offset="12" length="?" default="?"/>
+      </telegram>    
+      <telegram alias="CSNF" name="Connection_Status_Notification_Message" sequence="True" acknowledge="True">
+        <field name="Type" offset="0" length="4" default="48,49,48,56"/>
+        <field name="Length" offset="4" length="4" default="48,48,50,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="AppCode" offset="12" length="8" default="?"/>
+        <field name="Status" offset="20" length="2" default="?"/>
+      </telegram>
+      <telegram alias="PCN" name="Parameter_Change_Notification_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,49,48,54"/>
+        <field name="Length" offset="4" length="4" default="48,48,49,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+      </telegram>
+      <telegram alias="PNA" name="Parameter_Change_Notification_Acknowledge_Message" sequence="False" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,49,48,55"/>
+        <field name="Length" offset="4" length="4" default="48,48,49,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+      </telegram>
+      <telegram alias="GRNF" name="Gateway_Ready_Notification_Message" sequence="True" acknowledge="True">
+        <field name="Type" offset="0" length="4" default="48,49,48,57"/>
+        <field name="Length" offset="4" length="4" default="48,48,50,49"/>
+        <field name="Sequence" offset="8" length="4" default=""/>
+        <field name="AppCode" offset="12" length="8" default="?"/>
+        <field name="Status" offset="20" length="1" default="?"/>
+      </telegram>
+      <telegram alias="IRY" name="Item_Ready_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,50,48,49"/>
+        <field name="Length" offset="4" length="4" default="48,48,54,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+      </telegram>
+      <telegram alias="IEC" name="Item_Encoded_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,50,48,50"/>
+        <field name="Length" offset="4" length="4" default="48,48,56,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+        <field name="Destination" offset="62" length="20" default="?"/>
+      </telegram>
+      <telegram alias="IRM" name="Item_Removed_Message" sequence="True" acknowledge="False">
+        <field name="Type" offset="0" length="4" default="48,50,48,51"/>
+        <field name="Length" offset="4" length="4" default="48,48,54,50"/>
+        <field name="Sequence" offset="8" length="4" default="?"/>
+        <field name="SubSystem" offset="12" length="10" default="?"/>
+        <field name="Source" offset="22" length="20" default="?"/>
+        <field name="GID" offset="42" length="10" default="?"/>
+        <field name="LicensePlate" offset="52" length="10" default="?"/>
+      </telegram>
+    </telegramSet>
+  </configSet>
+</configuration>

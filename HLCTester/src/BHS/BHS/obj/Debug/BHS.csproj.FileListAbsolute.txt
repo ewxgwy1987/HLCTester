@@ -1,0 +1,8 @@
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\bin\Debug\BHS.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\bin\Debug\BHS.pdb
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\bin\Debug\log4net.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\bin\Debug\PALS.Configure.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\bin\Debug\PALS.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\obj\Debug\ResolveAssemblyReference.cache
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\obj\Debug\BHS.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester\src\BHS\BHS\obj\Debug\BHS.pdb

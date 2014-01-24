@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+  <telegram alias="GID">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>50001</LOCATION>
+    <TYPE>1</TYPE>
+  </telegram>
+  <telegram alias="ICR">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>2003</LOCATION>
+    <SCR_LVL>1</SCR_LVL>
+    <SCR_RES>22</SCR_RES>
+    <PLC_IDX>194</PLC_IDX>
+  </telegram>
+	<telegram alias="ISC">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>300</LOCATION>
+    <LIC_1>0123450234</LIC_1>
+    <LIC_2>0000000000</LIC_2>
+    <SCN_HEAD>&lt;F1&gt;&lt;C0&gt;</SCN_HEAD>
+    <SCN_STS>1</SCN_STS>
+    <PLC_IDX>22</PLC_IDX>
+  </telegram>
+  <telegram alias="GID">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>60001</LOCATION>
+    <TYPE>2</TYPE>
+  </telegram>
+</configuration>

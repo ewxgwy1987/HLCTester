@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="HLCTester">
+</Property><Property Name="Solution File" Value="F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester.sln">
+</Property><Property Name="Date" Value="2013年11月29日">
+</Property><Property Name="Time" Value="11:08:49">
+</Property></Properties><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Test_SAC2PLCGW.csproj" Description="Project file successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Test_SAC2PLCGW.csproj">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Class1.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Class1.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Form1.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Form1.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Form1.Designer.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Form1.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Program.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Program.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Properties\AssemblyInfo.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Properties\Resources.Designer.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Properties\Settings.Designer.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Properties\Settings.settings" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\PterisGlobal.ico" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\PterisGlobal.ico">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Form1.resx" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Form1.resx">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Properties\Resources.resx" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Test_SAC2PLCGW.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Test_SAC2PLCGW.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Test_SAC2PLCGW" Source="HLCTester\Test_SAC2PLCGW\Test_SAC2PLCGW.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

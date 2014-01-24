@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="HLCTester">
+</Property><Property Name="Solution File" Value="F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\HLCTester.sln">
+</Property><Property Name="Date" Value="2013年11月29日">
+</Property><Property Name="Time" Value="11:09:25">
+</Property><Property Name="Log Number" Value="2">
+</Property></Properties><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Test_SortEngine.csproj" Description="Project file successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Test_SortEngine.csproj">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Class1.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Class1.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Form1.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Form1.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Form1.Designer.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Form1.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Program.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Program.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Properties\AssemblyInfo.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Properties\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Properties\Resources.Designer.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Properties\Resources.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Properties\Settings.Designer.cs" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Properties\Settings.Designer.cs">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Properties\Settings.settings" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Properties\Settings.settings">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Form1.resx" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Form1.resx">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Properties\Resources.resx" Description="File successfully backed up as F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\Backup1\Properties\Resources.resx">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Test_SortEngine.csproj" Description="Project converted successfully">
+</Event><Event ErrorLevel="3" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Test_SortEngine.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="Test_SortEngine" Source="HLCTester\Test_SortEngine\Test_SortEngine.csproj" Description="Scan complete: Upgrade not required for project files.">
+</Event></UpgradeLog>

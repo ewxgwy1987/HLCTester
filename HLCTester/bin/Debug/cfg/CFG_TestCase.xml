@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<telegram name="ISC">
+    <testdata1>&lt;F1&gt;&lt;C0&gt;</testdata1>
+  </telegram>
+</configuration>

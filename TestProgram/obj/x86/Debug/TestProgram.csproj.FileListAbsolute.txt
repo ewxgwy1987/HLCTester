@@ -1,0 +1,11 @@
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\TestProgram.exe.config
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\TestProgram.exe
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\TestProgram.pdb
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\BHS.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\log4net.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\PALS.Configure.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\PALS.dll
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\bin\Debug\BHS.pdb
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\obj\x86\Debug\TestProgram.exe
+F:\1Pteris Global Ltd\GUO WENYU\projects\US charlotte\Tester\HLCTester\TestProgram\obj\x86\Debug\TestProgram.pdb
