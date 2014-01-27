@@ -40,11 +40,11 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
             //}
         }
 
-        public string ShowLength
+        public int ShowLength
         {
             get
             {
-                return this.m_showlength.ToString();
+                return this.m_showlength;
             }
             //set
             //{
@@ -110,6 +110,14 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
                 this.m_datatype = datatype;
                 this.m_showlength = Convert.ToInt32(showlength);
                 this.m_length = Convert.ToInt32(length);
+
+                if (!CheckDataType())
+                {
+                    errorstr += "Error in " + thisMethod + "\n";
+                    errorstr += "DataType is not match with the length of field. DataType: " + this.DataType + ", Length: " + this.Length + "\n";
+                    _logger.Error(errorstr);
+                    throw new Exception(errorstr);
+                }
             }
             catch (Exception exp)
             {
@@ -141,6 +149,9 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
                         chkres = true;
                     break;
                 case "string":
+                    chkres = true;
+                    break;
+                case "binary":
                     chkres = true;
                     break;
                 default:
@@ -187,9 +198,13 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
                         case "string":
                             this.m_bytevalue = Encoding.Default.GetBytes(this.m_strvalue);
                             break;
+                        case "binary":
+                            this.m_bytevalue = Util.HexByteStrToArray(this.m_strvalue);
+                            break;
                         default:
-                            errorstr += "Error in " + thisMethod + ".  Unknown DataType.";
-                            return false;
+                            errorstr += "Error in " + thisMethod + ".  Unknown DataType.\n";
+                            throw new Exception(errorstr);
+                            //return false;
                             //break;
                     }
                 }
@@ -264,10 +279,14 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
                         case "string":
                             this.m_strvalue = new string(Util.ByteArrayToCharArray(this.m_bytevalue));
                             break;
+                        case "binary":
+                            this.m_strvalue =  BitConverter.ToString(this.m_bytevalue);
+                            break;
                         default:
                             errorstr += "Error in " + thisMethod + ".  Unknown DataType.";
-                            return false;
-                        //break;
+                            throw new Exception(errorstr);
+                            //return false;
+                            //break;
                     }
                 }
                 else
@@ -289,9 +308,12 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
             return true;
         }
 
-        private bool IsValidByteData()
+        public bool IsValidByteData()
         {
-            return this.m_bytevalue.Length == this.m_length;
+            if (this.m_bytevalue != null)
+                return this.m_bytevalue.Length == this.m_length;
+            else
+                return false;
         }
 
         #endregion

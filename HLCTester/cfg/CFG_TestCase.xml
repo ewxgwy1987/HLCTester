@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
+  <!--
   <telegram alias="GID">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
     <LOCATION>50001</LOCATION>
     <TYPE>1</TYPE>
   </telegram>
+  -->
   <telegram alias="ICR">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
@@ -14,6 +16,7 @@
     <SCR_RES>22</SCR_RES>
     <PLC_IDX>194</PLC_IDX>
   </telegram>
+  <!--
 	<telegram alias="ISC">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
@@ -30,4 +33,5 @@
     <LOCATION>60001</LOCATION>
     <TYPE>2</TYPE>
   </telegram>
+  -->
 </configuration>

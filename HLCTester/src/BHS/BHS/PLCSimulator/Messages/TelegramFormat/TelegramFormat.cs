@@ -103,14 +103,14 @@ namespace BHS.PLCSimulator
                             {
                                 string errorstring = "Field set problems,Telegram: "
                                     + this.m_telegram_alias
-                                    + "NAME--" + name
+                                    + " NAME--" + name
                                     + " OFFSET--" + offset
                                     + " LENGTH--" + length
                                     + " DEFAULT--" + f_default
                                     + " Datatype--" + datatype
                                     + " ShowLength--" + showlength;
                                 _logger.Error(errorstring);
-                                throw new Exception("errorstring");
+                                throw new Exception(errorstring);
                             }
                             else
                             {

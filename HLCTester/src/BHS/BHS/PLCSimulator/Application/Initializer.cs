@@ -367,8 +367,13 @@ namespace BHS.PLCSimulator
                         string alias = XMLConfig.GetSettingFromAttribute(temp_node, "alias", "WrongAlias");
                         if (TelegramFormatList.HasTelegram(alias))
                         {
-                            Type telegram_type = Type.GetType("BHS.PLCSimulator." + alias + "_Telegram");
-                            SAC2PLCTelegram new_telegram = (SAC2PLCTelegram)Activator.CreateInstance(telegram_type, new Object[1] { temp_node });
+                            Type telegram_type;
+                            if (alias == "CRAI" || alias == "FBTI" || alias == "FPTI")
+                                telegram_type = Type.GetType("BHS.PLCSimulator." + alias + "_Telegram");
+                            else
+                                telegram_type = Type.GetType("BHS.PLCSimulator.Messages.Telegram.General_Telegram");
+
+                            SAC2PLCTelegram new_telegram = (SAC2PLCTelegram)Activator.CreateInstance(telegram_type, new Object[2] { temp_node, alias });
                             this.HT_TelegramTestcase.Add(idx, new_telegram);
                             idx++;
                         }

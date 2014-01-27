@@ -65,7 +65,7 @@ namespace HLCTester
                 else
                     throw new Exception("Application initialization failure!");
 
-                int i;
+                
                 this.cbxTelegramList.Items.Clear();
                 foreach (DictionaryEntry temptele in _init.HT_TelegramTestcase)
                 {
