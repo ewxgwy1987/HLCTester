@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <configuration>
-  <!--
+  <!--0003 PLC=>SAC--> 
   <telegram alias="GID">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
-    <LOCATION>50001</LOCATION>
+    <LOCATION>1102</LOCATION>
     <TYPE>1</TYPE>
   </telegram>
-  -->
+  
+  <!--0004 PLC=>SAC--> 
   <telegram alias="ICR">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
@@ -16,7 +17,8 @@
     <SCR_RES>22</SCR_RES>
     <PLC_IDX>194</PLC_IDX>
   </telegram>
-  <!--
+  
+  <!--0005 PLC=>SAC--> 
 	<telegram alias="ISC">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
@@ -27,11 +29,97 @@
     <SCN_STS>1</SCN_STS>
     <PLC_IDX>22</PLC_IDX>
   </telegram>
-  <telegram alias="GID">
+  
+  <!--0006 PLC=>SAC--> 
+  <telegram alias="BMAM">
     <GID_MSB>?</GID_MSB>
     <GID_LSB>?</GID_LSB>
-    <LOCATION>60001</LOCATION>
+    <LOCATION>1102</LOCATION>
+    <LENGTH>100</LENGTH>
+    <WIDTH>110</WIDTH>
+    <HEIGHT>120</HEIGHT>
     <TYPE>2</TYPE>
   </telegram>
-  -->
+  
+  <!--0007 SAC=>PLC--> 
+  <telegram alias="IRD">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <DEST_1>4500</DEST_1>
+    <DEST_2>4406</DEST_2>
+    <TYPE>2</TYPE>
+    <PLC_IDX>179</PLC_IDX>
+  </telegram>
+  
+  <!--0008 PLC=>SAC--> 
+  <telegram alias="ISE">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>3116</LOCATION>
+    <DEST>4401</DEST>
+    <TYPE>2</TYPE>
+    <PLC_IDX>179</PLC_IDX>
+  </telegram>
+  
+  <!--0009 PLC=>SAC--> 
+  <telegram alias="IPR">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>3112</LOCATION>
+    <DEST>4403</DEST>
+    <TYPE>6</TYPE>
+  </telegram>
+  
+  <!--0010 PLC=>SAC--> 
+  <telegram alias="ILT">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>3613</LOCATION>
+  </telegram>
+  
+  <!--0011 PLC=>SAC--> 
+  <telegram alias="ITI">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>1611</LOCATION>
+    <YEAR>2014</YEAR>
+    <MON>01</MON>
+    <DAY>02</DAY>
+    <HR>11</HR>
+    <MIN>17</MIN>
+    <SEC>26</SEC>
+  </telegram>
+  
+  <!--0012 PLC=>SAC -->
+  <telegram alias="MER">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>4109</LOCATION>
+    <LIC>0618000001</LIC>
+    <AIRLINE></AIRLINE>
+    <FLIGHT>0000</FLIGHT>
+    <SDO>20140127</SDO>
+    <DEST>0</DEST>
+    <TYPE>1</TYPE>
+    <PLC_IDX>207</PLC_IDX>
+  </telegram>
+  
+  <!--1500P PLC=>SAC--> 
+  <telegram alias="1500P">
+    <GID_MSB>?</GID_MSB>
+    <GID_LSB>?</GID_LSB>
+    <LOCATION>2613</LOCATION>
+    <LIC>0618000003</LIC>
+    <TYPE>14</TYPE>
+    <X_RAYID>1</X_RAYID>
+    <BRP>1</BRP>
+    <BIT>1</BIT>
+    <YEAR>2014</YEAR>
+    <MON>01</MON>
+    <DAY>28</DAY>
+    <HR>10</HR>
+    <MIN>50</MIN>
+    <SEC>26</SEC>
+  </telegram>
+  
 </configuration>

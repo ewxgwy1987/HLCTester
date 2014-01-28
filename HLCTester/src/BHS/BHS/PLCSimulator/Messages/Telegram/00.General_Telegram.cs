@@ -47,29 +47,62 @@ namespace BHS.PLCSimulator.Messages.Telegram
 
             HT_FieldValueList = new Hashtable();
 
-            // Initilize the HT_FieldValueList
-            foreach (DictionaryEntry fielditem in this.m_TelFormat.HT_FieldList)
+            try
             {
-                FieldFormat field = fielditem.Value as FieldFormat;
-                if (field.FieldName != FDN_TelegramType && field.FieldName != FDN_TelegramLength && field.FieldName != FDN_TelegramSeqNo)
+                // Initilize the HT_FieldValueList
+                foreach (DictionaryEntry fielditem in this.m_TelFormat.HT_FieldList)
                 {
-                    FieldValue new_fvalue = new FieldValue(field.FieldName, field.DataType, field.ShowLength, field.FieldLength);
-                    HT_FieldValueList.Add(field.FieldName, new_fvalue);
+                    FieldFormat field = fielditem.Value as FieldFormat;
+                    if (field.FieldName != FDN_TelegramType && field.FieldName != FDN_TelegramLength && field.FieldName != FDN_TelegramSeqNo)
+                    {
+                        FieldValue new_fvalue = new FieldValue(field.FieldName, field.DataType, field.ShowLength, field.FieldLength);
+                        HT_FieldValueList.Add(field.FieldName, new_fvalue);
+                    }
                 }
+
+                this.InitializeTelegram();
+
+                //Encoding the telegram
+                this.TelegramEncoding();
             }
-
-            this.InitializeTelegram();
-
-            //Encoding the telegram
-            this.TelegramEncoding();
+            catch (Exception exp)
+            {
+                _logger.Error(exp.ToString());
+                throw exp;
+            }
 
         }
 
         public General_Telegram(byte[] data, string tel_aliasname)
             : base(data, tel_aliasname)
         {
-            this.TelegramDecoding();
+            this.m_aliasname = tel_aliasname;
+
+            HT_FieldValueList = new Hashtable();
+
+            try
+            {
+                // Initilize the HT_FieldValueList
+                foreach (DictionaryEntry fielditem in this.m_TelFormat.HT_FieldList)
+                {
+                    FieldFormat field = fielditem.Value as FieldFormat;
+                    if (field.FieldName != FDN_TelegramType && field.FieldName != FDN_TelegramLength && field.FieldName != FDN_TelegramSeqNo)
+                    {
+                        FieldValue new_fvalue = new FieldValue(field.FieldName, field.DataType, field.ShowLength, field.FieldLength);
+                        HT_FieldValueList.Add(field.FieldName, new_fvalue);
+                    }
+                }
+
+                this.TelegramDecoding();
+            }
+            catch (Exception exp)
+            {
+                _logger.Error(exp.ToString());
+                throw exp;
+            }
         }
+
+
 
         #endregion
 
@@ -216,14 +249,14 @@ namespace BHS.PLCSimulator.Messages.Telegram
         {
             FieldValue fdval;
             string showstr = "";
-            showstr += "Telegram:" + this.TelegramAlias + "  Name:" + this.TelegramName + "\n";
-            showstr += "TLG_TYPE:" + this.TLG_TYPE + " ";
-            showstr += "TLG_LENGTH:" + this.TLG_LEN + " ";
-            showstr += "TLG_SEQ:" + this.TLG_SEQ + " ";
+            showstr += "Telegram:" + this.TelegramAlias + "  Name:" + this.TelegramName + "\r\n";
+            showstr += "TLG_TYPE:" + this.TLG_TYPE + "\r\n";
+            showstr += "TLG_LENGTH:" + this.TLG_LEN + "\r\n";
+            showstr += "TLG_SEQ:" + this.TLG_SEQ + "\r\n";
             foreach (DictionaryEntry de in HT_FieldValueList)
             {
                 fdval = de.Value as FieldValue;
-                showstr += fdval.FieldName + ":" + fdval.StringValue + ' ';
+                showstr += fdval.FieldName + ":" + fdval.StringValue + "\r\n";
             }
             Console.WriteLine(showstr);
             return showstr; ;

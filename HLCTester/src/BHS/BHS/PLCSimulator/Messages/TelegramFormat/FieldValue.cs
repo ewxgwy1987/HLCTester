@@ -60,7 +60,10 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
             }
             set
             {
-                this.m_strvalue = value;
+                if (value.Length != this.m_length && this.DataType == "string")
+                    this.m_strvalue = new string(Util.CharPad(value.ToCharArray(), this.m_length));
+                else
+                    this.m_strvalue = value;
             }
         }
 
@@ -164,7 +167,7 @@ namespace BHS.PLCSimulator.Messages.TelegramFormat
         public bool FieldValue_StrToByte()
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
-            string errorstr = "";
+            string errorstr = "Field:" + this.FieldName + ". Field StrValue:" + this.StringValue + ".\n";
 
             if (this.m_strvalue == null || this.m_strvalue.Length == 0)
             {

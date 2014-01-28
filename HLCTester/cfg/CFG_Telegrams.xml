@@ -465,7 +465,7 @@
       <telegram alias="MER" name="Item_Manual_Encoding_Request_Message" sequence="True" acknowledge="False">
         <field name="Type" offset="0" length="4" default="48,48,49,50" datatype="string" showlength="4"/>
         <!--0012-->
-        <field name="Length" offset="4" length="4" default="48,49,52,56" datatype="string" showlength="4"/>
+        <field name="Length" offset="4" length="4" default="48,48,52,56" datatype="string" showlength="4"/>
         <!--0048-->
         <field name="Sequence" offset="8" length="4" default="?" datatype="uint" showlength="10"/>
         <field name="GID_MSB" offset="12" length="1" default="?" datatype="byte" showlength="2"/>
@@ -477,7 +477,7 @@
         <field name="SDO" offset="35" length="8" default="?" datatype="string" showlength="8"/>
         <field name="DEST" offset="43" length="2" default="?" datatype="ushort" showlength="0"/>
         <field name="TYPE" offset="45" length="1" default="?" datatype="byte" showlength="2"/>
-		<field name="PLC_IDX" offset="46" length="2" default="?" datatype="ushort" showlength="5"/>
+		    <field name="PLC_IDX" offset="46" length="2" default="?" datatype="ushort" showlength="5"/>
       </telegram>
       <telegram alias="AFAI" name="Airport_Code_Allocation_Info_Message" sequence="True" acknowledge="True">
         <field name="Type" offset="0" length="4" default="48,48,49,51" datatype="string" showlength="4"/>
@@ -549,7 +549,7 @@
       </telegram>
       <telegram alias="TSYN" name="TimeSynchronizing_Message" sequence="True" acknowledge="False">
         <field name="Type" offset="0" length="4" default="48,48,57,49" datatype="string" showlength="4"/>
-        <field name="Length" offset="4" length="4" default="48,48,50,48" datatype="string" showlength="4"/>
+        <field name="Length" offset="4" length="4" default="48,48,51,48" datatype="string" showlength="4"/>
         <field name="Sequence" offset="8" length="4" default="?" datatype="uint" showlength="10"/>
         <field name="DateTime" offset="12" length="8" default="?" datatype="string" showlength="8"/>
       </telegram>  

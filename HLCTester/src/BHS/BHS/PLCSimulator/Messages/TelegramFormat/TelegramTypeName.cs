@@ -133,7 +133,7 @@ namespace BHS.PLCSimulator
         private static void Init_HTTypeToAlias(string[] tele_type, string[] tele_alias)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
-
+            
             int i;
             try
             {
@@ -147,27 +147,6 @@ namespace BHS.PLCSimulator
             {
                 _logger.Error(thisMethod + "Failed", exp);
             }
-            //ht_TypeToAlias.Add("0001", "CRQ");
-            //ht_TypeToAlias.Add("0002", "CCF");
-            //ht_TypeToAlias.Add("0003", "GID");
-            //ht_TypeToAlias.Add("0004", "ICR");
-            //ht_TypeToAlias.Add("0005", "ISC");
-            //ht_TypeToAlias.Add("0006", "BMAM");
-            //ht_TypeToAlias.Add("0007", "IRD");
-            //ht_TypeToAlias.Add("0008", "ISE");
-            //ht_TypeToAlias.Add("0009", "IPR");
-            //ht_TypeToAlias.Add("0010", "ILT");
-            //ht_TypeToAlias.Add("0011", "ITI");
-            //ht_TypeToAlias.Add("0012", "MER");
-            //ht_TypeToAlias.Add("0013", "AFAI");
-            //ht_TypeToAlias.Add("0014", "CRAI");
-            //ht_TypeToAlias.Add("0015", "FBTI");
-            //ht_TypeToAlias.Add("0016", "FPTI");
-            //ht_TypeToAlias.Add("0017", "1500P");
-            //ht_TypeToAlias.Add("0090", "SOL");
-            //ht_TypeToAlias.Add("0091", "TSYN");
-            //ht_TypeToAlias.Add("0099", "ACK");
-
         }
 
         private static void Init_HTAliasToType()

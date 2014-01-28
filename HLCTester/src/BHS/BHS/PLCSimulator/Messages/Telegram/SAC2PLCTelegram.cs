@@ -87,7 +87,7 @@ namespace BHS.PLCSimulator
         {
             Init_SAC2PLCTelegram(tel_Alias);
             Console.WriteLine("SAC2PLCTelegram Constructor with byte[] rawdata");
-            this.TelegramDecoding();
+            //this.TelegramDecoding();
         }
 
         public SAC2PLCTelegram(byte[] data, string channel, string tel_Alias)
@@ -95,7 +95,7 @@ namespace BHS.PLCSimulator
         {
             Init_SAC2PLCTelegram(tel_Alias);
             Console.WriteLine("SAC2PLCTelegram Constructor with byte[] rawdata");
-            this.TelegramDecoding();
+            //this.TelegramDecoding();
         }
 
         #endregion
@@ -305,8 +305,8 @@ namespace BHS.PLCSimulator
 
             if (errorstr.Length != 0)
             {
-                Console.WriteLine(errorstr);
                 _logger.Error(errorstr);
+                throw new Exception(errorstr);
             }
             return m_RawData;
         }

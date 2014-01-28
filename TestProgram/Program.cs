@@ -20,11 +20,15 @@ namespace TestProgram
         static void Main(string[] args)
         {
             int i;
-            for (i = 0; i < 10; i++)
-            {
-                Console.WriteLine(Util.GetGID());
-                Thread.Sleep(20);
-            }
+
+            string str = "";
+            char[] tch = str.ToCharArray();
+            char[] ch = Util.CharPad(str.ToCharArray(),8);
+
+            string output = ">" + new string(ch) + "<";
+
+            Console.WriteLine(output);
+
             Console.Read();
         }
     }

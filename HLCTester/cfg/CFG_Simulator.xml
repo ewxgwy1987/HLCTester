@@ -111,9 +111,9 @@
          message sending delay is implemented in SAC and it can be enabled by setting below. -->
     <enableSendingDelay>True</enableSendingDelay>
     <!-- the CIP Data Table Write Request sending delay time in milisecond. its value should be within 10~100ms. Default is 10ms. -->
-    <sendingDelayTime>50</sendingDelayTime>
+    <sendingDelayTime>80</sendingDelayTime>
     <!-- the CIP Data Table Write Response sending delay time in milisecond. its value should be within 0~100ms. Default is 50ms. -->
-    <sendingCIPResponseDelayTime>70</sendingCIPResponseDelayTime>
+    <sendingCIPResponseDelayTime>80</sendingCIPResponseDelayTime>
   </configSet>
 
   <configSet name="PALS.Net.Filters.Frame.Frame">

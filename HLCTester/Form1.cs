@@ -14,6 +14,7 @@ using System.Threading;
 
 using BHS;
 using BHS.PLCSimulator;
+using BHS.PLCSimulator.Messages.Telegram;
 using PALS.Configure;
 using PALS.Utilities;
 using PALS.Telegrams;
@@ -60,10 +61,13 @@ namespace HLCTester
                     _init.OnDisconnected += new EventHandler<BHS.MessageEventArgs>(Initializer_OnDisconnected);
                     _init.OnReceived += new EventHandler<BHS.MessageEventArgs>(Initializer_OnReceived);
 
-                    tbxMsgLog.Text += "[" + DateTime.Now + "] " + "Application has been successfully initialized.\r\n\r\n";
+                    tbxMsgLog.Text = "[" + DateTime.Now + "] " + "Application has been successfully initialized.\r\n\r\n" + tbxMsgLog.Text;
                 }
                 else
+                {
+                    tbxMsgLog.Text = "[" + DateTime.Now + "] " + "Application initialization failed.\r\n\r\n" + tbxMsgLog.Text;
                     throw new Exception("Application initialization failure!");
+                }
 
                 
                 this.cbxTelegramList.Items.Clear();
@@ -99,7 +103,7 @@ namespace HLCTester
         public delegate void DlgtFun_SendTelegram(string telegramData);
         private void WriteMsgLog(string telegramData)
         {
-            tbxMsgLog.Text += "[" + DateTime.Now + "] " + "-> [Gateway] MSG: <" + telegramData + ">\r\n\r\n";
+            tbxMsgLog.Text = "[" + DateTime.Now + "] " + "[Gateway] <= PLC MSG: <<<<<<<<<<<< \r\n" + telegramData + ">\r\n\r\n" + tbxMsgLog.Text;
         }
         
         private void btSentGW_Click(object sender, EventArgs e)
@@ -178,9 +182,26 @@ namespace HLCTester
             }
             else
             {
-                txtBox.Text += "[" + DateTime.Now + "] " + "<- [" + e.ChannelName + "] MSG:<" +
+                txtBox.Text = "[" + DateTime.Now + "] " + "<- [" + e.ChannelName + "] => PLC MSG:<" +
                         PALS.Utilities.Functions.ConvertByteArrayToString(
-                            e.Message.RawData, -1, PALS.Utilities.HexToStrMode.ToAscPaddedHexString) + ">\r\n\r\n";
+                            e.Message.RawData, -1, PALS.Utilities.HexToStrMode.ToAscPaddedHexString) + ">\r\n\r\n" + txtBox.Text;
+
+                byte[] b_type=new byte[4];
+                Array.Copy(e.Message.RawData, 0, b_type, 0, 4);
+                string type = new string(Util.ByteArrayToCharArray(b_type));
+                if (TelegramTypeName.HasType(type))
+                {
+                    string tel_alias = TelegramTypeName.GetAliasByType(type);
+                    General_Telegram new_tlgm = new General_Telegram(e.Message.RawData, tel_alias);
+                    txtBox.Text = "[" + DateTime.Now + "] " + "<- [" + e.ChannelName + "] => PLC >>>>>>>>>>>> \r\n "
+                                + new_tlgm.ShowAllData() + "\r\n\r\n"
+                                + txtBox.Text;
+                }
+                else
+                {
+                    txtBox.Text = "[" + DateTime.Now + "] " + "<- [" + e.ChannelName + "]. Telegram type is unknown.\r\n\r\n" + txtBox.Text;
+                }
+                 
             }
         }
 

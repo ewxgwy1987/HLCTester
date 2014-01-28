@@ -29,6 +29,7 @@ namespace BHS.PLCSimulator
         public static bool Init(ref XmlNode node_apptele)
         {
             bool result = true;
+            HT_TelegramFormatList.Clear();
 
             TelegramTypeName.Init(ref node_apptele);
 
