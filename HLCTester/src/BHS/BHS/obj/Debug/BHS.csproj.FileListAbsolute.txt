@@ -13,4 +13,3 @@ D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\src\BHS\BHS\bin\
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\src\BHS\BHS\bin\Debug\PALS.dll
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\src\BHS\BHS\obj\Debug\BHS.dll
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\src\BHS\BHS\obj\Debug\BHS.pdb
-D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\HLCTester\src\BHS\BHS\obj\Debug\BHS.csprojResolveAssemblyReference.cache
