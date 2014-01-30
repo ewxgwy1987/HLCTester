@@ -28,7 +28,7 @@ namespace HLCTester
         private BHS.PLCSimulator.Initializer _init;
 #if DEBUG
         private const string Path_XMLFileTelegram = @"../../cfg/CFG_Telegrams.xml";
-        private const string Path_XMLFileSetting = @"../../cfg/CFG_Simulator.xml";
+        private const string Path_XMLFileSetting = @"../../cfg/CFG_PLCSimulator.xml";
         private const string Path_XMLFileTestCase = @"../../cfg/CFG_TestCase.xml";
 #else
         private const string Path_XMLFileTelegram = @"./cfg/CFG_Telegrams.xml";
@@ -84,6 +84,15 @@ namespace HLCTester
                 MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
+        }
+
+        private void Form1_FormClosed(Object sender, FormClosedEventArgs e)
+        {
+            if (_init != null)
+            {
+                _init.Dispose();
+                _init = null;
+            }
         }
 
         private void ThrdFun_SendTelegramToGW(object mykeys)

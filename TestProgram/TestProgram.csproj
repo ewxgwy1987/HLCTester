@@ -57,13 +57,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HLCTester\src\BHS\BHS\BHS.csproj">
-      <Project>{08CB7867-1A78-473D-928B-7C48711C6509}</Project>
-      <Name>BHS %28src\BHS\BHS%29</Name>
-    </ProjectReference>
+    <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <ProjectReference Include="..\HLCTester\src\BHS\BHS.csproj">
+      <Project>{08CB7867-1A78-473D-928B-7C48711C6509}</Project>
+      <Name>BHS</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

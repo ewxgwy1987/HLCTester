@@ -48,6 +48,7 @@
             // 
             // btSentGW
             // 
+            this.btSentGW.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.btSentGW.Location = new System.Drawing.Point(606, 90);
             this.btSentGW.Name = "btSentGW";
             this.btSentGW.Size = new System.Drawing.Size(75, 36);
@@ -148,6 +149,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 
