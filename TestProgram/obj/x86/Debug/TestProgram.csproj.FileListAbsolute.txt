@@ -13,9 +13,6 @@ D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\Test
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\TestProgram.exe
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\TestProgram.pdb
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\BHS.dll
-D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\log4net.dll
-D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\PALS.Configure.dll
-D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\PALS.dll
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\bin\Debug\BHS.pdb
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\obj\x86\Debug\TestProgram.csprojResolveAssemblyReference.cache
 D:\1Pteris Global Ltd\GWY_DEV\2012Charlotte\HLCTester\TestProgram\obj\x86\Debug\TestProgram.exe

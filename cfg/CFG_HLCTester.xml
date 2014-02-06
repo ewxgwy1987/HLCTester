@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!---->
+
+<BHS>
+  <NodeType>
+    <NTRCV>
+      <Telegrams>
+      </Telegrams>
+    </NTRCV>
+    <CV>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>GID</TelegramType>
+        </Telegram>
+        <Telegram>
+          <TelegramType>ITI</TelegramType>
+        </Telegram>
+        <Telegram>
+          <TelegramType>ILT</TelegramType>
+        </Telegram>
+      </Telegrams>
+    </CV>
+    <BDD>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>BMAM</TelegramType>
+        </Telegram>
+      </Telegrams>
+    </BDD>
+    <ATR>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>ISC</TelegramType>
+        </Telegram>
+        <StatusList>
+          <Status>1</Status>
+          <Status>2</Status>
+          <Status>3</Status>
+          <Status>4</Status>
+          <Status>5</Status>
+          <Status>6</Status>
+          <Status>7</Status>
+          <Status>8</Status>
+        </StatusList>
+      </Telegrams>
+    </ATR>
+    <EDS>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>ICR</TelegramType>          
+          <StatusList>
+            <Status>11</Status>
+            <Status>12</Status>
+          </StatusList>
+        </Telegram>
+      </Telegrams>
+      
+    </EDS>
+    
+    
+    <VSU>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>IPR</TelegramType>
+        </Telegram>
+        <Telegram>
+          <TelegramType>ILT</TelegramType>
+        </Telegram>
+      </Telegrams>
+    </VSU>
+
+    <CBRA>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>1500P</TelegramType>
+        </Telegram>
+      </Telegrams>
+    </CBRA>
+    
+    <MES>
+      <!--<Telegrams>
+        <Telegram>
+          <TelegramType>MER</TelegramType>
+        </Telegram>
+      </Telegrams>-->
+      <Telegrams>
+        <Telegram>
+          <TelegramType>IRY</TelegramType>
+        </Telegram>
+      </Telegrams>
+    </MES>
+    
+    <MUC>
+      <Telegrams>
+        <Telegram>
+          <TelegramType>IPR</TelegramType>
+        </Telegram>
+        <Telegram>
+          <TelegramType>ILT</TelegramType>
+        </Telegram>
+        <Telegram>
+          <TelegramType>ISE</TelegramType>
+        </Telegram>
+      </Telegrams>
+    </MUC>
+    
+  </NodeType>
+
+  <Layout>
+    <DefaultDistance>30</DefaultDistance>
+    <DefaultSpeed>10</DefaultSpeed>
+    <Nodes>
+      <!--SS1-1   GID   CV-->
+      <Node>
+        <Name>SS1-1/GID</Name>
+        <Location>SS1-1</Location>
+        <Type>CV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>SS1-2/BMAM</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--SS1-1   BMAM    BDD-->
+      <Node>
+        <Name>SS1-2/BMAM</Name>
+        <Location>SS1-2</Location>
+        <Type>BDD</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>SS1-2/ISC</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--SS1-2   ISC   ATR-->
+      <Node>
+        <Name>SS1-2/ISC</Name>
+        <Location>SS1-2</Location>
+        <Type>ATR</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>SS1-5-M2/IPR</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--SS1-5-M2   IPR    VSU-->
+      <Node>
+        <Name>SS1-5-M2/IPR</Name>
+        <Location>SS1-5-M2</Location>
+        <Type>VSU</Type>
+        <DependNode>SS1-2/BMAM</DependNode>
+        <NextNodes>
+          <NextNode direction="normal" isSecure="false">
+            <Name>ED1-12/ITI</Name>
+            <ProceedLoc>ED1-2</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <NextNode direction="oog" isSecure="true">
+            <Name>OOG1</Name>
+            <ProceedLoc>SS1-6</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ED1-12   ITI    CV-->
+      <Node>
+        <Name>ED1-12/ITI</Name>
+        <Location>ED1-12</Location>
+        <Type>CV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ED1-13/ICR</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ED1-13  ICR   EDS-->
+      <Node>
+        <Name>ED1-13/ICR</Name>
+        <Location>ED1-13</Location>
+        <Type>EDS</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ED1-14/ITI</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ED1-14  ITI   CV-->
+      <Node>
+        <Name>ED1-14/ITI</Name>
+        <Location>ED1-14</Location>
+        <Type>CV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ED1-19A/IPR</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ED1-19A  IPR  VSU-->
+      <Node>
+        <Name>ED1-19A/IPR</Name>
+        <Location>ED1-19A</Location>
+        <Type>VSU</Type>
+        <DependNode>ED1-13/ICR</DependNode>
+        <NextNodes>
+          <NextNode direction="clear" isSecure="false">
+            <Name>CLR_Line</Name>
+            <ProceedLoc>ED1-19B</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <NextNode direction="alarm" isSecure="true">
+            <Name>OOG1-15A/IPR</Name>
+            <ProceedLoc>ED1-19C</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--OOG1_Line NTRCV-->
+      <Node>
+        <Name>OOG1_Line</Name>
+        <Location>OOGx-x</Location>
+        <Type>NTRCV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>OOG1-5/GID</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--OOG1-5  GID   CV-->
+      <Node>
+        <Name>OOG1-5/GID</Name>
+        <Location>OOG1-5</Location>
+        <Type>CV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>OOG1-15A/IPR</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--OOG1-15A    IPR   VSU-->
+      <Node>
+        <Name>OOG1-15A/IPR</Name>
+        <Location>OOG1-15A</Location>
+        <Type>VSU</Type>
+        <DependNode>ED1-13/ICR</DependNode>
+        <NextNodes>
+          <NextNode direction="clear" isSecure="false">
+            <Name>CLR_Line</Name>
+            <ProceedLoc>OOG1-15B</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <NextNode direction="alarm" isSecure="true">
+            <Name>SB1-3/IPR</Name>
+            <ProceedLoc>OOG1-15C</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--SB1-3   IPR   VSU-->
+      <Node>
+        <Name>SB1-3/IPR</Name>
+        <Location>SB1-3</Location>
+        <Type>VSU</Type>
+        <DependNode></DependNode>
+        <NextNodes>
+          <NextNode>
+            <Name>SB1-13/1500P</Name>
+            <ProceedLoc>SB1-4</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--SB1-13   1500P    CBRA-->
+      <Node>
+        <Name>SB1-13/1500P</Name>
+        <Location>SB1-13</Location>
+        <Type>CBRA</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>CLR_Line</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--CLR_Line  NTRCV-->
+      <Node>
+        <Name>CLR_Line</Name>
+        <Location>CBx-x</Location>
+        <Type>NTRCV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ML1-2/GID</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ML1-2  GID  CV-->
+      <Node>
+        <Name>ML1-2/GID</Name>
+        <Location>ML1-2</Location>
+        <Type>CV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ML1-2/ISC</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ML1-2  ISC  ATR-->
+      <Node>
+        <Name>ML1-2/ISC</Name>
+        <Location>ML1-2</Location>
+        <Type>ATR</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>OOG1-15A/IPR</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ML1-4-M1  IPR  VSU-->
+      <Node>
+        <Name>ML1-4-M1/IPR</Name>
+        <Location>ML1-4-M1</Location>
+        <Type>VSU</Type>
+        <DependNode type="telegram">IRD</DependNode>
+        <NextNodes>
+          <NextNode direction="other" isSecure="false" isSent="false">
+            <Name>CLR_Line</Name>
+            <ProceedLoc>OOG1-15B</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <NextNode direction="4500" isSecure="true" isSent="true">
+            <Name>ME1-9/GID</Name>
+            <ProceedLoc>ME1-2</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ME1-9  GID  CV-->
+      <Node>
+        <Name>ME1-9/GID</Name>
+        <Location>ME1-9</Location>
+        <Type>CV</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ME1-9/IRY</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ME1-9  IRY  MES-->
+      <Node>
+        <Name>ME1-9/IRY</Name>
+        <Location>ME1-9</Location>
+        <Type>MES</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>ML1-13/IPR</Name>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--MU1 4401-->
+      <!--ML1-14-M1  IPR  MUC-->
+      <Node>
+        <Name>MU1/IPR</Name>
+        <Location>ML1-14-M1</Location>
+        <Type>MUC</Type>
+        <DependNode type="telegram">IRD</DependNode>
+        <DependNode type="telegram">IEC</DependNode>
+        <DependNode type="telegram">IRM</DependNode>
+        <NextNodes>
+          <!--IRD or IEC to MU1-->
+          <NextNode direction="4401" isSecure="false" isSent="true">
+            <Name>OVER</Name>
+            <ProceedLoc>MU1</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--Remove from MES-->
+          <NextNode direction="0000" isSecure="false" isSent="false">
+            <Name>OVER</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--IRD or IEC to other MU-->
+          <NextNode direction="other" isSecure="true" isSent="false">
+            <Name>MU2/IPR</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--MU2 4402-->
+      <!--ML1-13-M1  IPR  MUC-->
+      <Node>
+        <Name>MU2/IPR</Name>
+        <Location>ML1-13-M1</Location>
+        <Type>MUC</Type>
+        <DependNode type="telegram">IRD</DependNode>
+        <DependNode type="telegram">IEC</DependNode>
+        <NextNodes>
+          <!--IRD or IEC to MU2-->
+          <NextNode direction="4402" isSecure="false" isSent="true">
+            <Name>OVER</Name>
+            <ProceedLoc>MU2</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--IRD or IEC to other MU-->
+          <NextNode direction="other" isSecure="true" isSent="false">
+            <Name>MU3/IPR</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--MU3 4403-->
+      <!--ML1-10-M1  IPR  MUC-->
+      <Node>
+        <Name>MU3/IPR</Name>
+        <Location>ML1-10-M1</Location>
+        <Type>MUC</Type>
+        <DependNode type="telegram">IRD</DependNode>
+        <DependNode type="telegram">IEC</DependNode>
+        <NextNodes>
+          <!--IRD or IEC to MU3-->
+          <NextNode direction="4403" isSecure="false" isSent="true">
+            <Name>OVER</Name>
+            <ProceedLoc>MU3</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--To MU6-->
+          <NextNode direction="4406" isSecure="true" isSent="false">
+            <Name>ToMU56/IPR</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--IRD or IEC to other MU-->
+          <NextNode direction="other" isSecure="false" isSent="false">
+            <Name>MU4/IPR</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--MU4 4404-->
+      <!--ML1-6-M1  IPR  MUC-->
+      <Node>
+        <Name>MU4/IPR</Name>
+        <Location>ML1-6-M1</Location>
+        <Type>MUC</Type>
+        <DependNode type="telegram">IRD</DependNode>
+        <DependNode type="telegram">IEC</DependNode>
+        <NextNodes>
+          <!--IRD or IEC to MU4-->
+          <NextNode direction="4404" isSecure="false" isSent="true">
+            <Name>OVER</Name>
+            <ProceedLoc>MU4</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--To MU5-->
+          <NextNode direction="4405" isSecure="true" isSent="false">
+            <Name>ToMU56/IPR</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--IRD or IEC to other MU-->
+          <NextNode direction="other" isSecure="false" isSent="false">
+            <Name>MU1/IPR</Name>
+            <ProceedLoc></ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--ML1-10-M2  IPR  VSU-->
+      <Node>
+        <Name>ToMU56/IPR</Name>
+        <Location>ML1-10-M2</Location>
+        <Type>VSU</Type>
+        <NextNodes>
+          <NextNode>
+            <Name>MF6-12/IPR</Name>
+            <ProceedLoc>MF6-4</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+      <!--MF6-12  IPR  VSU-->
+      <Node>
+        <Name>MF6-12/IPR</Name>
+        <Location>MF6-12</Location>
+        <Type>VSU</Type>
+        <DependNode type="telegram">IRD</DependNode>
+        <DependNode type="telegram">IEC</DependNode>
+        <NextNodes>
+          <!--IRD or IEC to MU5-->
+          <NextNode direction="4405" isSecure="true" isSent="true">
+            <Name>OVER</Name>
+            <ProceedLoc>MU5</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+          <!--IRD or IEC to MU6-->
+          <NextNode direction="4406" isSecure="true" isSent="true">
+            <Name>OVER</Name>
+            <ProceedLoc>MU6</ProceedLoc>
+            <Distance></Distance>
+            <Speed></Speed>
+          </NextNode>
+        </NextNodes>
+      </Node>
+    </Nodes>
+  </Layout>
+</BHS>
+
+
+
+<Charlotte>
+  <CL1>
+    <BagSource>abc.txt</BagSource>
+    <LostTrackRate>0.01</LostTrackRate>
+    <NextNode>
+      <NodeName>CV1</NodeName>
+      <Distance>100</Distance>
+      <Speed>50</Speed>
+      <DependingNode></DependingNode>
+    </NextNode>
+  </CL1>
+  <CL2>
+    <BagSource>abc.txt</BagSource>
+    <LostTrackRate>0.01</LostTrackRate>
+    <NextNode>
+      <NodeName>CV2</NodeName>
+      <NodeType>CV</NodeType>
+      <Distance></Distance>
+      <Speed></Speed>
+      <DependingNode></DependingNode>
+    </NextNode>
+  </CL2>
+</Charlotte>

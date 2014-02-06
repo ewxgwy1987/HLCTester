@@ -10,17 +10,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D586AC0B-258
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "lib", "lib", "{971F4E81-0C97-4DB9-85BE-30F307219671}"
 	ProjectSection(SolutionItems) = preProject
-		HLCTester\lib\log4net.dll = HLCTester\lib\log4net.dll
-		HLCTester\lib\PALS.Configure.dll = HLCTester\lib\PALS.Configure.dll
-		HLCTester\lib\PALS.dll = HLCTester\lib\PALS.dll
+		lib\log4net.dll = lib\log4net.dll
+		lib\PALS.Configure.dll = lib\PALS.Configure.dll
+		lib\PALS.dll = lib\PALS.dll
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cfg", "cfg", "{B71D6CA0-7F63-4A1C-9EDB-768D02214E00}"
 	ProjectSection(SolutionItems) = preProject
-		HLCTester\cfg\CFG_HLCTester.xml = HLCTester\cfg\CFG_HLCTester.xml
-		HLCTester\cfg\CFG_Simulator.xml = HLCTester\cfg\CFG_Simulator.xml
-		HLCTester\cfg\CFG_Telegrams.xml = HLCTester\cfg\CFG_Telegrams.xml
-		HLCTester\cfg\CFG_TestCase.xml = HLCTester\cfg\CFG_TestCase.xml
+		cfg\CFG_HLCTester.xml = cfg\CFG_HLCTester.xml
+		cfg\CFG_PLCSimulator.xml = cfg\CFG_PLCSimulator.xml
+		cfg\CFG_Telegrams.xml = cfg\CFG_Telegrams.xml
+		cfg\CFG_TestCase.xml = cfg\CFG_TestCase.xml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProgram", "TestProgram\TestProgram.csproj", "{75687AE6-8D54-4BAD-B7BC-9F01BF0A8F11}"

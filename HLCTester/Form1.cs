@@ -27,9 +27,9 @@ namespace HLCTester
 
         private BHS.PLCSimulator.Initializer _init;
 #if DEBUG
-        private const string Path_XMLFileTelegram = @"../../cfg/CFG_Telegrams.xml";
-        private const string Path_XMLFileSetting = @"../../cfg/CFG_PLCSimulator.xml";
-        private const string Path_XMLFileTestCase = @"../../cfg/CFG_TestCase.xml";
+        private const string Path_XMLFileTelegram = @"../../../cfg/CFG_Telegrams.xml";
+        private const string Path_XMLFileSetting = @"../../../cfg/CFG_PLCSimulator.xml";
+        private const string Path_XMLFileTestCase = @"../../../cfg/CFG_TestCase.xml";
 #else
         private const string Path_XMLFileTelegram = @"./cfg/CFG_Telegrams.xml";
         private const string Path_XMLFileSetting = @"./cfg/CFG_Simulator.xml";
