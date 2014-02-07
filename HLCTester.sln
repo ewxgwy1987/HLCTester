@@ -18,6 +18,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cfg", "cfg", "{B71D6CA0-7F63-4A1C-9EDB-768D02214E00}"
 	ProjectSection(SolutionItems) = preProject
 		cfg\CFG_HLCTester.xml = cfg\CFG_HLCTester.xml
+		cfg\CFG_InputDefine.xml = cfg\CFG_InputDefine.xml
 		cfg\CFG_PLCSimulator.xml = cfg\CFG_PLCSimulator.xml
 		cfg\CFG_Telegrams.xml = cfg\CFG_Telegrams.xml
 		cfg\CFG_TestCase.xml = cfg\CFG_TestCase.xml

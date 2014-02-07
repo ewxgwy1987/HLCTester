@@ -17,6 +17,8 @@ namespace BHS.PLCSimulator.Messages.Telegram
     {
         #region Class Field and Property
 
+        public Hashtable HT_FieldValueList;
+
         private const string XML_TCS_TELEGRAM = "telegram";
         private const string FDN_TelegramType = "Type";
         private const string FDN_TelegramLength = "Length";
@@ -26,8 +28,6 @@ namespace BHS.PLCSimulator.Messages.Telegram
 
         private string m_aliasname;
         private XmlNode m_xmltestcase;
-        private Hashtable HT_FieldValueList;
-
         // The name of current class 
         private static readonly string _className =
                     System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString();

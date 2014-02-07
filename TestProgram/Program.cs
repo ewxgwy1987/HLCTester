@@ -18,8 +18,11 @@ using PALS.Telegrams;
 
 namespace TestProgram
 {
+    
     class Program
     {
+        private static string str;
+
         static void Main(string[] args)
         {
             int i;
@@ -49,6 +52,7 @@ namespace TestProgram
             string xpath2 = "child::LOCATION";
             string xpath3 = "./LOCATION";
             XPathDocument xpdoc = new XPathDocument(xmlpath1);
+
             XPathNavigator xpnav = xpdoc.CreateNavigator();
             XPathNodeIterator xpnoditer = xpnav.Select(xpath);
             //xpnav.Evaluate(xpath);
@@ -71,8 +75,28 @@ namespace TestProgram
             }
 
             //Console.WriteLine(xmlpath1);
+            str = "teststr";
+            Thread thrd_test = new Thread(ThrdFun_Test);
+            thrd_test.IsBackground = true;
+            thrd_test.Start(str);
 
             Console.Read();
+        }
+
+        static private void ThrdFun_Test(object args)
+        {
+            string outstr = (string)args;
+            str = "new string";
+            Console.WriteLine(outstr);
+        }
+    }
+
+    public class tester
+    {
+        public tester(string str)
+        {
+            Console.WriteLine("haha");
+            Console.WriteLine(str);
         }
     }
 }
