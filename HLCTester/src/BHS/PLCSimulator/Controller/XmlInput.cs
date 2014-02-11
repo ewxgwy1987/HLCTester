@@ -45,8 +45,8 @@ namespace BHS.PLCSimulator.Controller
         private const string XCFG_ATTB_DECIDEFIELD = "DecideField";
 
 
-        //The predefined value for attributes
-        private const string DCFLD_PDVAL_TRUE = "true";
+        //The pre-defined value for attributes
+        private const string PDVAL_DCFLD_TRUE = "true";
         private const string PDVAL_DPTYPE_INPUT = "input";
         private const string PDVAL_DPTYPE_TLGM = "telegram";
 
@@ -78,11 +78,6 @@ namespace BHS.PLCSimulator.Controller
 
             try
             {
-                //this.m_InputXPHDoc = new XPathDocument(FilePath);
-                //this.m_RootNavg = this.m_InputXPHDoc.CreateNavigator();
-                //XPH_GlobalTelegram = "/" + XCFG_INPUTFORMAT+"/"+XCFG_GLOBALSETTING+"/"+XCFG_TELEGRAM;
-                //XPH_Node = "/" + XCFG_INPUTFORMAT + "/" + XCFG_NODES + "/" + XCFG_NODE;
-
                 this.m_InputXMLPath = FilePath;
                 this.m_XLinqInputDoc = XDocument.Load(FilePath);
                 this.m_XLinqRoot = this.m_XLinqInputDoc.Root;
@@ -243,7 +238,7 @@ namespace BHS.PLCSimulator.Controller
                              from field in tlgm.Elements()
                              where field.Name != XCFG_TLGMTYPE
                              && field.Attribute(XCFG_ATTB_DECIDEFIELD) != null
-                             && field.Attribute(XCFG_ATTB_DECIDEFIELD).Value == DCFLD_PDVAL_TRUE
+                             && field.Attribute(XCFG_ATTB_DECIDEFIELD).Value == PDVAL_DCFLD_TRUE
                              select field;
                 if (fields != null && fields.Any())
                 {

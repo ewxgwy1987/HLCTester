@@ -159,10 +159,7 @@
           </StatusList>
         </Telegram>
       </Telegrams>
-      
     </EDS>
-    
-    
     <VSU>
       <Telegrams>
         <Telegram type="random">
@@ -179,7 +176,6 @@
         </Telegram>
       </Telegrams>
     </VSU>
-
     <CBRA>
       <Telegrams>
         <Telegram>
@@ -192,7 +188,6 @@
         </Telegram>
       </Telegrams>
     </CBRA>
-    
     <MES>
       <!--<Telegrams>
         <Telegram>
@@ -208,7 +203,6 @@
         </Telegram>
       </Telegrams>
     </MES>
-    
     <MUC>
       <Telegrams>
         <Telegram type="random" rate="0.01">
@@ -226,7 +220,6 @@
         </Telegram>
       </Telegrams>
     </MUC>
-    
   </NodeType>
 
   <Layout>
@@ -246,6 +239,7 @@
         <TlgmField type="constant">RM</TlgmField>
       </DependNode>
     </DpndTlgmNodes>
+	<!--Main Part of Layout-->
     <Nodes>
       <!--SS1-1   GID   CV-->
       <Node>
