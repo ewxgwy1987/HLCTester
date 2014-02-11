@@ -52,6 +52,10 @@
     <Compile Include="PLCSimulator\Configure\GlobalContext.cs" />
     <Compile Include="PLCSimulator\Application\Initializer.cs" />
     <Compile Include="MessageEventArgs.cs" />
+    <Compile Include="PLCSimulator\Controller\BagNavigator.cs" />
+    <Compile Include="PLCSimulator\Controller\MainControl.cs" />
+    <Compile Include="PLCSimulator\Controller\XmlHLCTester.cs" />
+    <Compile Include="PLCSimulator\Controller\XmlInput.cs" />
     <Compile Include="PLCSimulator\Messages\Handlers\MessageHandler.cs" />
     <Compile Include="PLCSimulator\Messages\Handlers\MessageHandlerParameters.cs" />
     <Compile Include="PLCSimulator\Messages\Handlers\PLC2GWSessionForward.cs" />
@@ -71,9 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="PLCSimulator\NewFolder1\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

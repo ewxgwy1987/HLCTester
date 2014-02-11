@@ -22,9 +22,10 @@
     <GlobalSetting>
       <Telegram>
         <TelegramType>ISE</TelegramType>
-        <TYPE DependField="Telegram">
-          <TeleAlias>IRD</TeleAlias>
-          <TeleField type="location">DEST_1</TeleField>
+        <TYPE DependType="telegram">
+          <TlgmAlias>IRD</TlgmAlias>
+          <!--the actual value-->
+          <TlgmField>DEST_1</TlgmField>
         </TYPE>
       </Telegram>
     </GlobalSetting>
@@ -65,17 +66,17 @@
         <NodeName>SB1-13#1500P</NodeName>
         <Telegram>
           <TelegramType>1500P</TelegramType>
-          <LIC DependField="Input">Begin\LicensePlate\LP</LIC>
-          <TYPE DependField="Input">ED1-13#ICR\ICR\SCR_RES</TYPE>
+          <LIC DependType="input">Begin\LicensePlate\LP</LIC>
+          <TYPE DependType="input">ED1-13#ICR\ICR\SCR_RES</TYPE>
         </Telegram>
       </Node>
       <Node>
         <NodeName>ML1-2#ISC</NodeName>
         <Telegram>
           <TelegramType>ISC</TelegramType>
-          <LIC_1 DependField="Input">SS1-2#ISC\ISC\LIC_1</LIC_1>
-          <LIC_2 DependField="Input">SS1-2#ISC\ISC\LIC_2</LIC_2>
-          <SCN_STS DependField="Input">SS1-2#ISC\ISC\SCN_STS</SCN_STS>
+          <LIC_1 DependType="input">SS1-2#ISC\ISC\LIC_1</LIC_1>
+          <LIC_2 DependType="input">SS1-2#ISC\ISC\LIC_2</LIC_2>
+          <SCN_STS DependType="input">SS1-2#ISC\ISC\SCN_STS</SCN_STS>
         </Telegram>
       </Node>
     </Nodes>

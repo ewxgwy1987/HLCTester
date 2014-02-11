@@ -232,7 +232,7 @@
   <Layout>
     <DefaultDistance>30</DefaultDistance>
     <DefaultSpeed>10</DefaultSpeed>
-    <DpndTlgmNode>
+    <DpndTlgmNodes>
       <DependNode>
         <TlgmAlias>IRD</TlgmAlias>
         <TlgmField type="location">DEST_1</TlgmField>
@@ -245,7 +245,7 @@
         <TlgmAlias>IRM</TlgmAlias>
         <TlgmField type="constant">RM</TlgmField>
       </DependNode>
-    </DpndTlgmNode>
+    </DpndTlgmNodes>
     <Nodes>
       <!--SS1-1   GID   CV-->
       <Node>
