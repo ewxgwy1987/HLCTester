@@ -33,8 +33,8 @@ namespace BHS.PLCSimulator.Controller
         private const string XCFG_STAT_VALUE = "Value";
         private const string XCFG_STAT_DIRECTION = "Direction";
 
-        private const string XCFG_ATTB_TYPE = "type";
-        private const string XCFG_ATTB_RATE = "rate";
+        private const string XCFG_ATTB_NDTP_TLM_TYPE = "type";
+        private const string XCFG_ATTB_NDTP_TLM_RATE = "rate";
 
         //The tags and attributes used in Layout
         private const string XCFG_LAYOUT="Layout";
@@ -45,7 +45,7 @@ namespace BHS.PLCSimulator.Controller
         private const string XCFG_TLGM_INDIVNODE = "DependNode";
         private const string XCFG_TLGMNODE_ALIAS="TlgmAlias";
         private const string XCFG_TLGMNODE_FIELD="TlgmField";
-        private const string XCFG_ATTB_TYPE="type";
+        private const string XCFG_ATTB_TLMND_TYPE="type";
 
         private const string XCFG_NODES = "Nodes";
         private const string XCFG_INDIV_NODE = "Node";
@@ -75,18 +75,303 @@ namespace BHS.PLCSimulator.Controller
         private const string PDVAL_IS_FALSE = "false";
         private const string PDVAL_DPTYPE_TLGM = "telegram";
 
-        //
+        // 
         private IEnumerable<XElement> XELMs_NodeTypes;
         private IEnumerable<XElement> XELMs_TlgmNodes;
         private IEnumerable<XElement> XELMs_Nodes;
         private IEnumerable<XElement> XELMs_DependNodes;
+
+        // pre-defined tags used to construct XmlElement with defalut value to initialize the telegram
+        private const string TC_TAG_TELEGRAM = "telegram";
+        private const string TC_ATTB_TLGMALIAS = "alias";
+
+        // The name of current class 
+        private static readonly string _className =
+                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString();
+        // Create a logger for use in this class
+        private static readonly log4net.ILog _logger =
+                    log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        private int m_df_distance;
+        public int DefaultDistance
+        {
+            get
+            {
+                return this.m_df_distance;
+            }
+        }
+
+        private int m_df_speed;
+        public int DefaultSpeed
+        {
+            get
+            {
+                return this.m_df_speed;
+            }
+        }
+
+        private bool init_mark;
         
         #endregion
 
         #region Class Constructor, Dispose, & Destructor
+
+        /// <summary>
+        /// This class is used to analyze the CFG_HLCTester.xml. Use a FilePath to initialize the Class with Linq. 
+        /// </summary>
+        /// <param name="FilePath"></param>
+        public XmlHLCTester(string FilePath)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            init_mark = false;
+
+            try
+            {
+                this.m_TesterXMLPath = FilePath;
+                this.m_XLinqTesterDoc = XDocument.Load(FilePath);
+                this.m_XLinqRoot = this.m_XLinqTesterDoc.Root;
+
+                this.XELMs_NodeTypes = this.m_XLinqRoot.Elements(XCFG_NODETYPE);
+                this.XELMs_TlgmNodes = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_TLGM_NODES).Elements(XCFG_TLGM_INDIVNODE);
+                this.XELMs_Nodes = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_NODES).Elements(XCFG_INDIV_NODE);
+                this.XELMs_DependNodes = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_NODES).Descendants(XCFG_NODE_DEPENDNODE);
+
+                this.m_df_distance = -1;
+                this.m_df_speed = -1;
+                string dis = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_DF_DISTANCE).Value;
+                string speed = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_DF_SPEED).Value;
+                this.m_df_distance = int.Parse(dis);
+                this.m_df_speed = int.Parse(speed);
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            init_mark = true;
+        }
+
         #endregion
 
         #region Member Function
+
+        /// <summary>
+        /// return all alias of telegram nodes defined in &lt;DpndTlgmNodes&gt; part
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetTlgmDpndNodes()
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            if (init_mark == false)
+                return null;
+
+            string[] tlgmalias_list;
+            try
+            {
+                int i;
+                var tlgmlist = from tlgmnode in this.XELMs_TlgmNodes
+                                where tlgmnode.Element(XCFG_TLGMNODE_ALIAS) != null
+                                select tlgmnode.Element(XCFG_TLGMNODE_ALIAS);
+
+                if (tlgmlist.Any())
+                {
+                    tlgmalias_list = new string[tlgmlist.Count()];
+                    i = 0;
+                    foreach (var tlgm in tlgmlist)
+                    {
+                        tlgmalias_list[i] = tlgm.Value;
+                        i++;
+                    }
+                    return tlgmalias_list;
+                }
+                else
+                    return null;
+                
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// return the field name and type
+        /// </summary>
+        /// <param name="alias"></param>
+        /// <param name="fieldname"></param>
+        /// <param name="fieldtype">If fieldtype is "location", it needs some special process</param>
+        /// <returns></returns>
+        public bool GetTlgmDpndField(string alias, out string fieldname, out string fieldtype)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            fieldname = "";
+            fieldtype = "";
+            if (init_mark == false)
+                return false;
+
+            try
+            {
+                var tlgmfield = from tlgmnode in this.XELMs_TlgmNodes
+                               where tlgmnode.Element(XCFG_TLGMNODE_ALIAS) != null
+                               && tlgmnode.Element(XCFG_TLGMNODE_ALIAS).Value == alias
+                               select tlgmnode.Element(XCFG_TLGMNODE_FIELD);
+
+                if (tlgmfield.Any())
+                {
+                    XElement xfield = tlgmfield.First<XElement>();
+                    fieldname = xfield.Value;
+                    XAttribute xfieldattb = xfield.Attribute(XCFG_ATTB_TLMND_TYPE);
+                    //Attribute "type" may be "location" or other or there is not type attribute
+                    if (xfieldattb != null)
+                        fieldtype = xfieldattb.Value;
+                    else
+                        fieldtype = "";
+                    return true; ;
+                }
+                else
+                    return false;
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// return all Depended nodes defined in some key nodes, which does not have type attribute
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetLocDpndNodes()
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            if (init_mark == false)
+                return null;
+
+            string[] locdpndnodes;
+            try
+            {
+                int i;
+                var dpndnodes = from dpndnode in this.XELMs_DependNodes
+                                    where dpndnode.Attribute(XCFG_ATTB_DPND_TYPE) == null
+                                    select dpndnode.Value;
+
+                if (dpndnodes.Any())
+                {
+                    List<string> dpndnode_list = new List<string>();
+                    
+                    i = 0;
+                    foreach (var dpnd in dpndnodes)
+                    {
+                        if (dpndnode_list.IndexOf(dpnd) == -1)
+                        {
+                            dpndnode_list.Add(dpnd);
+                            i++;
+                        }
+                    }
+                    locdpndnodes = dpndnode_list.ToArray();
+                    return locdpndnodes;
+                }
+                else
+                    return null;
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Convert data to dirction according to the map of &lt;StatusList&gt; 
+        /// </summary>
+        /// <param name="nodetype"></param>
+        /// <param name="tlgmtype"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public string GetDpndDirection(string nodetype, string tlgmtype, string data)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            if (init_mark == false)
+                return "";
+
+            string direction = "";
+            try
+            {
+                var stat_direction = from ndtp in this.XELMs_NodeTypes
+                                     where ndtp.Name == nodetype
+                                     from tlgm in ndtp.Element(XCFG_TELEGRAMS).Elements(XCFG_INDIV_TELEGRAM)
+                                     where tlgm.Element(XCFG_TELEGRAMTYPE).Value == tlgmtype
+                                     from stat in tlgm.Element(XCFG_STATUSLIST).Elements(XCFG_INDIV_STATUS)
+                                     where stat.Element(XCFG_STAT_VALUE).Value == data
+                                     select stat.Element(XCFG_STAT_DIRECTION).Value;
+
+                if (stat_direction.Any())
+                {
+                    direction = stat_direction.First();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return direction;
+        }
+
+        public XmlNode GetDefalutValue(string nodetype, string tlgmtype)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            if (init_mark == false)
+                return null;
+
+            XmlNode default_value = null;
+            XElement xelm_dfval = new XElement(TC_TAG_TELEGRAM, new XAttribute(TC_ATTB_TLGMALIAS, tlgmtype));
+            try
+            {
+                var xelm_dfval_parts = from ndtp in this.XELMs_NodeTypes
+                                       where ndtp.Name == nodetype
+                                       from tlgm in ndtp.Element(XCFG_TELEGRAMS).Elements(XCFG_INDIV_TELEGRAM)
+                                       where tlgm.Element(XCFG_TELEGRAMTYPE).Value == tlgmtype
+                                       select tlgm.Element(XCFG_DEFAULTVALUE).Elements();
+
+                if (xelm_dfval_parts.Any())
+                {
+                    foreach (var xfield in xelm_dfval_parts)
+                    {
+                        xelm_dfval.Add(xfield);
+                    }
+                    XmlReader xreader = xelm_dfval.CreateReader();
+                    xreader.MoveToContent();
+                    XmlDocument xdfdoc = new XmlDocument();
+                    default_value = xdfdoc.ReadNode(xreader);         
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return default_value;
+        }
+
         #endregion
     }
 }

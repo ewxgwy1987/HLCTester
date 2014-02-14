@@ -68,7 +68,7 @@ namespace BHS.PLCSimulator.Controller
         #region Class Constructor, Dispose, & Destructor
 
         /// <summary>
-        /// Use a FilePath to initialize the Class. This Class use linq to XML to parse 
+        /// Use a FilePath to initialize the Class with Linq. This class is used to analyze the CFG_InputDefine.xml
         /// </summary>
         /// <param name="FilePath"></param>
         public XmlInput(string FilePath)
@@ -84,17 +84,7 @@ namespace BHS.PLCSimulator.Controller
 
                 this.XELMs_GlobalTelegrams = this.m_XLinqRoot.Element(XCFG_INPUTFORMAT).Element(XCFG_GLOBALSETTING).Elements(XCFG_TELEGRAM);
                 this.XELMs_Nodes = this.m_XLinqRoot.Element(XCFG_INPUTFORMAT).Element(XCFG_NODES).Elements(XCFG_NODE);
-            }
-            catch (DirectoryNotFoundException exp)
-            {
-                errstr += "The XML file is not found. " + exp.ToString();
-                _logger.Error(errstr);
-            }
-            catch (XmlException exp)
-            {
-                errstr += "The XML file has error. " + exp.ToString();
-                _logger.Error(errstr);
-            }
+            }            
             catch (Exception exp)
             {
                 errstr += exp.ToString();
@@ -114,7 +104,26 @@ namespace BHS.PLCSimulator.Controller
         /// <returns></returns>
         public XElement GetEnterPoint(string projname,string CLineName)
         {
-            return this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName).Element(XCFG_NEXTNODE);
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            try
+            {
+                if (this.m_XLinqRoot == null
+                    || this.m_XLinqRoot.Element(XCFG_PROJECT) == null
+                    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname) == null
+                    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName) == null)
+                {
+                    return null;
+                }
+
+                return this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName).Element(XCFG_NEXTNODE);
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                return null;
+            }
         }
 
         
@@ -135,6 +144,9 @@ namespace BHS.PLCSimulator.Controller
 
             XElement xval = null;
             DpndType = "";
+
+            if (this.XELMs_GlobalTelegrams == null || this.XELMs_Nodes == null)
+                return null;
 
             try
             {
@@ -185,6 +197,9 @@ namespace BHS.PLCSimulator.Controller
             XElement xval = null;
             DpndType = "";
 
+            if (this.XELMs_GlobalTelegrams == null || this.XELMs_Nodes == null)
+                return null;
+
             try
             {
                 var fields = from tlgm in this.XELMs_GlobalTelegrams
@@ -216,7 +231,7 @@ namespace BHS.PLCSimulator.Controller
         
         /// <summary>
         /// Get value of decide field with string type for specific Node Name in &lt;Nodes&gt; part. 
-        /// And return Depend type("input","Telegram","") in an out-parameter
+        /// And return decided telegram and field name in out-parameters
         /// </summary>
         /// <param name="NodeName"></param>
         /// <param name="DpndField"></param>
@@ -229,6 +244,9 @@ namespace BHS.PLCSimulator.Controller
             DecdTlgm = "";
             DecdField = "";
             string val="";
+
+            if (this.XELMs_GlobalTelegrams == null || this.XELMs_Nodes == null)
+                return null;
 
             try
             {
@@ -277,6 +295,9 @@ namespace BHS.PLCSimulator.Controller
 
             XElement xval = null;
             DpndType = "";
+
+            if (this.XELMs_GlobalTelegrams == null || this.XELMs_Nodes == null)
+                return null;
 
             string[] tagpath = path.Split('\\');
             if (tagpath.Length == 3)
@@ -365,6 +386,9 @@ namespace BHS.PLCSimulator.Controller
             string dpndtype="";
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            if (this.XELMs_GlobalTelegrams == null || this.XELMs_Nodes == null)
+                return null;
 
             // Search in <Nodes> part
             XElement xval = this.GetXValFromNode(NodeName, TlgmType, FieldName, out dpndtype);
