@@ -205,6 +205,12 @@
     </MES>
     <MUC>
       <Telegrams>
+	  <Telegram type="random">
+          <TelegramType>ILT</TelegramType>
+          <DefaultValue>
+            <LOCATION>9999</LOCATION>
+          </DefaultValue>
+        </Telegram>
         <Telegram type="random" rate="0.01">
           <TelegramType>ISE</TelegramType>
           <DefaultValue>

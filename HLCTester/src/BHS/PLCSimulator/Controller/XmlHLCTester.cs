@@ -300,7 +300,7 @@ namespace BHS.PLCSimulator.Controller
         /// <param name="tlgmtype"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public string GetDpndDirection(string nodetype, string tlgmtype, string data)
+        public string GetDirection(string nodetype, string tlgmtype, string data)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -370,6 +370,187 @@ namespace BHS.PLCSimulator.Controller
             }
 
             return default_value;
+        }
+
+        public string GetLocationByNode(string nodename)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string location = "";
+            try
+            {
+                var loc = from nd in this.XELMs_Nodes
+                          where nd.Element(XCFG_NODE_NAME) != null
+                          && nd.Element(XCFG_NODE_LOCATION) != null
+                          && nd.Element(XCFG_NODE_NAME).Value == nodename
+                          select nd.Element(XCFG_NODE_LOCATION).Value;
+
+                if (loc.Any())
+                {
+                    location = loc.First<string>();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return location;
+        }
+
+        public string GetTypeByNode(string nodename)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string nodetype = "";
+            try
+            {
+                var type = from nd in this.XELMs_Nodes
+                           where nd.Element(XCFG_NODE_NAME) != null
+                           && nd.Element(XCFG_NODE_TYPE) != null
+                           && nd.Element(XCFG_NODE_NAME).Value == nodename
+                           select nd.Element(XCFG_NODE_TYPE).Value;
+
+                if (type.Any())
+                {
+                    nodetype = type.First<string>();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return nodetype;
+        }
+
+        public string[] GetDpndNodeByNode(string nodename, out string[] dpndtypes)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            int i;
+            string[] dpndnodes = null;
+            dpndtypes = null;
+            try
+            {
+                var xelm_dpndnodes = from nd in this.XELMs_Nodes
+                                     where nd.Element(XCFG_NODE_NAME) != null
+                                     && nd.Element(XCFG_NODE_DEPENDNODE) != null
+                                     && nd.Element(XCFG_NODE_NAME).Value == nodename
+                                     select nd.Elements(XCFG_NODE_DEPENDNODE);
+
+                if (xelm_dpndnodes.Any())
+                {
+                    int cnt = xelm_dpndnodes.Count();
+                    dpndnodes = new string[cnt];
+                    dpndtypes = new string[cnt];
+                    i = 0;
+                    foreach (XElement dpndnode in xelm_dpndnodes)
+                    {
+                        dpndnodes[i] = dpndnode.Value;
+                        dpndtypes[i] = dpndnode.Attribute(XCFG_ATTB_DPND_TYPE).Value;
+                        i++;
+                    }
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return dpndnodes;
+        }
+
+        public XElement XGetFirstNextNode(string nodename)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            int i;
+            XElement firstnextnode = null;
+            try
+            {
+                var xelm_fnxnd = from nd in this.XELMs_Nodes
+                                 where nd.Element(XCFG_NODE_NAME) != null
+                                 && nd.Element(XCFG_NODE_NAME).Value == nodename
+                                 && nd.Element(XCFG_NEXTNODES) != null
+                                 && nd.Element(XCFG_NEXTNODES).Element(XCFG_INDIV_NEXTNODE) != null
+                                 select nd.Element(XCFG_NEXTNODES).Element(XCFG_INDIV_NEXTNODE);
+
+                if (xelm_fnxnd.Any())
+                {
+                    firstnextnode = xelm_fnxnd.First();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return firstnextnode;
+        }
+
+        public XElement XGetSecureNXND(string nodename)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            int i;
+            XElement securenxxd = null;
+            try
+            {
+                var xelm_secnxnd = from nd in this.XELMs_Nodes
+                                   where nd.Element(XCFG_NODE_NAME).Value == nodename
+                                   && nd.Element(XCFG_NEXTNODES) != null
+                                   && nd.Element(XCFG_NEXTNODES).Elements(XCFG_INDIV_NEXTNODE).Any() == true
+                                   from nxnd in nd.Element(XCFG_NEXTNODES).Elements(XCFG_INDIV_NEXTNODE)
+                                   where nxnd.Attribute(XCFG_ATTB_NXND_ISSECR).Value == PDVAL_IS_TRUE
+                                   select nxnd;
+
+                if (xelm_secnxnd.Any())
+                {
+                    securenxxd = xelm_secnxnd.First();
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return securenxxd;
+        }
+
+        public XElement XGetNextNode(string nodename, string direction)
+        {
+        }
+
+        public string ParseNextNode_Name(XElement xnextnode)
+        {
+        }
+
+        public string ParseNextNode_PRDLOC(XElement xnextnode)
+        {
+        }
+
+        public int ParseNextNode_WaitTime(XElement xnextnode)
+        {
+        }
+
+        public string[] GetSpecialTlgm(string nodetype, string tlgmtype, out double rate)
+        {
         }
 
         #endregion
