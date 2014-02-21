@@ -374,6 +374,7 @@ namespace BHS.PLCSimulator
                                 telegram_type = Type.GetType("BHS.PLCSimulator.Messages.Telegram.General_Telegram");
 
                             SAC2PLCTelegram new_telegram = (SAC2PLCTelegram)Activator.CreateInstance(telegram_type, new Object[2] { temp_node, alias });
+                            new_telegram.TelegramEncoding();
                             this.HT_TelegramTestcase.Add(idx, new_telegram);
                             idx++;
                         }

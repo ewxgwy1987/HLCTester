@@ -10,13 +10,13 @@
     <CV>
       <Telegrams>
         <Telegram type="random">
-          <TelegramType>ILT</TelegramType>
+          <TelegramAlias>ILT</TelegramAlias>
           <DefaultValue>
             <LOCATION>9999</LOCATION>
           </DefaultValue>
         </Telegram>
         <Telegram>
-          <TelegramType>GID</TelegramType>
+          <TelegramAlias>GID</TelegramAlias>
           <DefaultValue>
             <LOCATION>0000</LOCATION>
             <TYPE>01</TYPE>
@@ -33,14 +33,14 @@
           </StatusList>
         </Telegram>
         <Telegram>
-          <TelegramType>ITI</TelegramType>
+          <TelegramAlias>ITI</TelegramAlias>
         </Telegram>
       </Telegrams>
     </CV>
     <BDD>
       <Telegrams>
         <Telegram>
-          <TelegramType>BMAM</TelegramType>
+          <TelegramAlias>BMAM</TelegramAlias>
           <DefaultValue>
             <LENGTH>111</LENGTH>
             <WIDTH>222</WIDTH>
@@ -62,7 +62,7 @@
     <ATR>
       <Telegrams>
         <Telegram>
-          <TelegramType>ISC</TelegramType>
+          <TelegramAlias>ISC</TelegramAlias>
           <DefaultValue>
             <SCN_HEAD>&lt;F1&gt;&lt;C0&gt;</SCN_HEAD>
             <PLC_IDX>999</PLC_IDX>
@@ -107,7 +107,7 @@
     <EDS>
       <Telegrams>
         <Telegram>
-          <TelegramType>ICR</TelegramType>
+          <TelegramAlias>ICR</TelegramAlias>
           <DefaultValue>
             <PLC_IDX>999</PLC_IDX>
           </DefaultValue>
@@ -163,13 +163,13 @@
     <VSU>
       <Telegrams>
         <Telegram type="random">
-          <TelegramType>ILT</TelegramType>
+          <TelegramAlias>ILT</TelegramAlias>
           <DefaultValue>
             <LOCATION>9999</LOCATION>
           </DefaultValue>
         </Telegram>
         <Telegram>
-          <TelegramType>IPR</TelegramType>
+          <TelegramAlias>IPR</TelegramAlias>
           <DefaultValue>
             <TYPE>1</TYPE>
           </DefaultValue>
@@ -179,7 +179,7 @@
     <CBRA>
       <Telegrams>
         <Telegram>
-          <TelegramType>1500P</TelegramType>
+          <TelegramAlias>1500P</TelegramAlias>
           <DefaultValue>
             <X_RAYID>1</X_RAYID>
             <BRP>1</BRP>
@@ -191,12 +191,12 @@
     <MES>
       <!--<Telegrams>
         <Telegram>
-          <TelegramType>MER</TelegramType>
+          <TelegramAlias>MER</TelegramAlias>
         </Telegram>
       </Telegrams>-->
       <Telegrams>
         <Telegram>
-          <TelegramType>IRY</TelegramType>
+          <TelegramAlias>IRY</TelegramAlias>
           <DefaultValue>
             <PLC_IDX>999</PLC_IDX>
           </DefaultValue>
@@ -206,20 +206,20 @@
     <MUC>
       <Telegrams>
 	  <Telegram type="random">
-          <TelegramType>ILT</TelegramType>
+          <TelegramAlias>ILT</TelegramAlias>
           <DefaultValue>
             <LOCATION>9999</LOCATION>
           </DefaultValue>
         </Telegram>
         <Telegram type="random" rate="0.01">
-          <TelegramType>ISE</TelegramType>
+          <TelegramAlias>ISE</TelegramAlias>
           <DefaultValue>
             <TYPE>2</TYPE>
             <PLC_IDX>999</PLC_IDX>
           </DefaultValue>
         </Telegram>
         <Telegram>
-          <TelegramType>IPR</TelegramType>
+          <TelegramAlias>IPR</TelegramAlias>
           <DefaultValue>
             <TYPE>1</TYPE>
           </DefaultValue>
@@ -552,7 +552,7 @@
         <DependNode type="telegram">IRD</DependNode>
         <NextNodes>
           <!--IRD or IEC to MU1-->
-          <NextNode direction="MU1" isSecure="false" isSent="true">
+          <NextNode isSecure="false" isSent="true">
             <Name>OVER</Name>
             <ProceedLoc>MU1</ProceedLoc>
             <Distance></Distance>

@@ -92,6 +92,43 @@ namespace BHS.PLCSimulator.Controller
             }
         }
 
+        ~XmlInput()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        public void Dispose(bool disp_mark)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string infostr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            if (disp_mark)
+            {
+                _logger.Info(".");
+                _logger.Info("Class:[" + _className + "] object is being destroyed... <" + thisMethod + ">");
+            }
+
+            //---Clean Variable
+
+            if (XELMs_GlobalTelegrams != null) XELMs_GlobalTelegrams = null;
+            if (XELMs_Nodes != null) XELMs_Nodes = null;
+            if (m_XLinqInputDoc != null) m_XLinqInputDoc = null;
+            if (m_XLinqRoot != null) m_XLinqRoot = null;
+
+            //--Clear END
+
+            if (disp_mark)
+            {
+                if (_logger.IsInfoEnabled)
+                    _logger.Info("Class:[" + _className + "] object has been destroyed. <" + thisMethod + ">");
+            }
+        }
+
         #endregion
 
         #region Member Function
@@ -102,7 +139,7 @@ namespace BHS.PLCSimulator.Controller
         /// <param name="projname"></param>
         /// <param name="CLineName"></param>
         /// <returns></returns>
-        public XElement GetEnterPoint(string projname,string CLineName)
+        public XElement GetEntryPoint(string projname,string CLineName)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -126,6 +163,57 @@ namespace BHS.PLCSimulator.Controller
             }
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="NodeName"></param>
+        /// <param name="TlgmType"></param>
+        /// <returns></returns>
+        public string[] GetAllFieldsFromNode(string NodeName, string TlgmType)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            string[] fields = null;
+
+            if (this.XELMs_GlobalTelegrams == null || this.XELMs_Nodes == null)
+                return null;
+
+            try
+            {
+                var xelm_fieldnames = from xnode in this.XELMs_Nodes
+                                      where xnode.Element(XCFG_NODENAME).Value == NodeName
+                                      from xtlgm in xnode.Elements(XCFG_TELEGRAM)
+                                      where xtlgm.Element(XCFG_TLGMTYPE).Value == TlgmType
+                                      from field in xtlgm.Elements()
+                                      where field.Name != XCFG_TLGMTYPE
+                                      select field.Name;
+
+                if (xelm_fieldnames != null && xelm_fieldnames.Any())
+                {
+                    int cnt = xelm_fieldnames.Count();
+                    fields = new string[cnt];
+
+                    int i = 0;
+                    foreach (var xfd in xelm_fieldnames)
+                    {
+                        fields[i] = xfd.ToString();
+                        i++;
+                    }
+                }
+                else
+                {
+                    errstr += "Cannot find Fields for Node Name:" + NodeName + ", Telegram Type:" + TlgmType;
+                    _logger.Warn(errstr);
+                }
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return fields;
+        }
         
         /// <summary>
         /// Get value with XElement type for specific Node Name, Telegram Name, Field Name in &lt;Nodes&gt; part. 
@@ -230,11 +318,12 @@ namespace BHS.PLCSimulator.Controller
 
         
         /// <summary>
-        /// Get value of decide field with string type for specific Node Name in &lt;Nodes&gt; part. 
+        /// Get value of decide field with string type for specified Node Name in &lt;Nodes&gt; part. 
         /// And return decided telegram and field name in out-parameters
         /// </summary>
         /// <param name="NodeName"></param>
-        /// <param name="DpndField"></param>
+        /// <param name="DecdTlgm"></param>
+        /// <param name="DecdField"></param>
         /// <returns></returns>
         public string GetValFromDecide(string NodeName, out string DecdTlgm, out string DecdField)
         {

@@ -63,7 +63,7 @@ namespace BHS.PLCSimulator.Messages.Telegram
                 this.InitializeTelegram();
 
                 //Encoding the telegram
-                this.TelegramEncoding();
+                //this.TelegramEncoding();
             }
             catch (Exception exp)
             {

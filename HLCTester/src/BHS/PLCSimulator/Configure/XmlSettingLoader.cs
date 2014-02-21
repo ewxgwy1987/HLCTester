@@ -48,6 +48,7 @@ namespace BHS.PLCSimulator
         // Add by Guo Wenyu
         private const string XML_CONFIGSET_TELEGRAMSET = "telegramSet";
         private const string XML_CONFIGSET_APPTELEGRAM = "Application_Telegrams";
+        private const string XML_CONFIGSET_UTILINIT = "BHS.Util";
 
         // The name of current class 
         private static readonly string _className =
@@ -272,6 +273,22 @@ namespace BHS.PLCSimulator
                 _logger.Error("Initialize the TelegramFormatList Failed.");
             }
 
+            // Load XML Configset to initialize the Util
+            XmlNode xnode_util = XMLConfig.GetConfigSetElement(ref rootSetting, XML_CONFIGSET, "name", XML_CONFIGSET_UTILINIT);
+            if (xnode_util == null)
+            {
+                throw new Exception("configSet < name=\"" + XML_CONFIGSET_UTILINIT +
+                            "\"> is not found in the XML file.");
+            }
+
+            if (Util.Init(ref xnode_util))
+            {
+                _logger.Info("Initialization of Util completed.");
+            }
+            else
+            {
+                _logger.Error("Initialize the Util Failed.");
+            }
             // -------------------------------------------------------------------------------
             // Load GlobalContext settings from <configSet name="globalContext"> XMLNode
             // -------------------------------------------------------------------------------

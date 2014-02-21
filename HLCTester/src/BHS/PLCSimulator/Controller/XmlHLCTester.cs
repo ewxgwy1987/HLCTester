@@ -26,7 +26,7 @@ namespace BHS.PLCSimulator.Controller
         private const string XCFG_NDTP_NOTRACKING = "NTRCV";
         private const string XCFG_TELEGRAMS = "Telegrams";
         private const string XCFG_INDIV_TELEGRAM = "Telegram";
-        private const string XCFG_TELEGRAMTYPE = "TelegramType";
+        private const string XCFG_TELEGRAMALIAS = "TelegramAlias";
         private const string XCFG_DEFAULTVALUE = "DefaultValue";
         private const string XCFG_STATUSLIST = "StatusList";
         private const string XCFG_INDIV_STATUS = "Status";
@@ -132,7 +132,7 @@ namespace BHS.PLCSimulator.Controller
                 this.m_XLinqTesterDoc = XDocument.Load(FilePath);
                 this.m_XLinqRoot = this.m_XLinqTesterDoc.Root;
 
-                this.XELMs_NodeTypes = this.m_XLinqRoot.Elements(XCFG_NODETYPE);
+                this.XELMs_NodeTypes = this.m_XLinqRoot.Element(XCFG_NODETYPE).Elements();
                 this.XELMs_TlgmNodes = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_TLGM_NODES).Elements(XCFG_TLGM_INDIVNODE);
                 this.XELMs_Nodes = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_NODES).Elements(XCFG_INDIV_NODE);
                 this.XELMs_DependNodes = this.m_XLinqRoot.Element(XCFG_LAYOUT).Element(XCFG_NODES).Descendants(XCFG_NODE_DEPENDNODE);
@@ -153,6 +153,45 @@ namespace BHS.PLCSimulator.Controller
             init_mark = true;
         }
 
+        ~XmlHLCTester()
+        {
+            Dispose(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        public void Dispose(bool disp_mark)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string infostr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            if (disp_mark)
+            {
+                _logger.Info(".");
+                _logger.Info("Class:[" + _className + "] object is being destroyed... <" + thisMethod + ">");
+            }
+
+            //---Clean Variable
+            if (XELMs_NodeTypes != null) XELMs_NodeTypes = null;
+            if (XELMs_TlgmNodes != null) XELMs_TlgmNodes = null;
+            if (XELMs_Nodes != null) XELMs_Nodes = null;
+            if (XELMs_DependNodes != null) XELMs_DependNodes = null;
+
+            if (this.m_XLinqTesterDoc != null) m_XLinqTesterDoc = null;
+            if (this.m_XLinqRoot != null) m_XLinqRoot = null;
+
+            //--Clear END
+
+            if (disp_mark)
+            {
+                if (_logger.IsInfoEnabled)
+                    _logger.Info("Class:[" + _className + "] object has been destroyed. <" + thisMethod + ">");
+            }
+        }
+
         #endregion
 
         #region Member Function
@@ -161,7 +200,7 @@ namespace BHS.PLCSimulator.Controller
         /// return all alias of telegram nodes defined in &lt;DpndTlgmNodes&gt; part
         /// </summary>
         /// <returns></returns>
-        public string[] GetTlgmDpndNodes()
+        public string[] GetAllTlgmDpndNodes()
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -188,7 +227,11 @@ namespace BHS.PLCSimulator.Controller
                     return tlgmalias_list;
                 }
                 else
+                {
+                    errstr += "Cannot get Depended Telegram Nodes.";
+                    _logger.Warn(errstr);
                     return null;
+                }
                 
             }
             catch (Exception exp)
@@ -218,8 +261,7 @@ namespace BHS.PLCSimulator.Controller
             try
             {
                 var tlgmfield = from tlgmnode in this.XELMs_TlgmNodes
-                               where tlgmnode.Element(XCFG_TLGMNODE_ALIAS) != null
-                               && tlgmnode.Element(XCFG_TLGMNODE_ALIAS).Value == alias
+                               where tlgmnode.Element(XCFG_TLGMNODE_ALIAS).Value == alias
                                select tlgmnode.Element(XCFG_TLGMNODE_FIELD);
 
                 if (tlgmfield.Any())
@@ -232,10 +274,14 @@ namespace BHS.PLCSimulator.Controller
                         fieldtype = xfieldattb.Value;
                     else
                         fieldtype = "";
-                    return true; ;
+                    return true; 
                 }
                 else
+                {
+                    errstr += "Cannot get the field name and type of Depended Telegram Nodes. Telgram Alias:" + alias;
+                    _logger.Warn(errstr);
                     return false;
+                }
 
             }
             catch (Exception exp)
@@ -250,7 +296,7 @@ namespace BHS.PLCSimulator.Controller
         /// return all Depended nodes defined in some key nodes, which does not have type attribute
         /// </summary>
         /// <returns></returns>
-        public string[] GetLocDpndNodes()
+        public string[] GetAllLocDpndNodes()
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -282,7 +328,11 @@ namespace BHS.PLCSimulator.Controller
                     return locdpndnodes;
                 }
                 else
+                {
+                    errstr += "Cannot get Normal Depended Nodes(Normal).";
+                    _logger.Warn(errstr);
                     return null;
+                }
 
             }
             catch (Exception exp)
@@ -297,10 +347,10 @@ namespace BHS.PLCSimulator.Controller
         /// Convert data to dirction according to the map of &lt;StatusList&gt; 
         /// </summary>
         /// <param name="nodetype"></param>
-        /// <param name="tlgmtype"></param>
+        /// <param name="tlgmalias"></param>
         /// <param name="data"></param>
         /// <returns></returns>
-        public string GetDirection(string nodetype, string tlgmtype, string data)
+        public string GetDirection(string nodetype, string tlgmalias, string data)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -313,7 +363,7 @@ namespace BHS.PLCSimulator.Controller
                 var stat_direction = from ndtp in this.XELMs_NodeTypes
                                      where ndtp.Name == nodetype
                                      from tlgm in ndtp.Element(XCFG_TELEGRAMS).Elements(XCFG_INDIV_TELEGRAM)
-                                     where tlgm.Element(XCFG_TELEGRAMTYPE).Value == tlgmtype
+                                     where tlgm.Element(XCFG_TELEGRAMALIAS).Value == tlgmalias
                                      from stat in tlgm.Element(XCFG_STATUSLIST).Elements(XCFG_INDIV_STATUS)
                                      where stat.Element(XCFG_STAT_VALUE).Value == data
                                      select stat.Element(XCFG_STAT_DIRECTION).Value;
@@ -321,6 +371,11 @@ namespace BHS.PLCSimulator.Controller
                 if (stat_direction.Any())
                 {
                     direction = stat_direction.First();
+                }
+                else
+                {
+                    errstr += "Cannot convert to Direction. NodeType:" + nodetype + " ,TelegramType:" + tlgmalias + ", Data:" + data;
+                    _logger.Warn(errstr);
                 }
 
             }
@@ -333,7 +388,13 @@ namespace BHS.PLCSimulator.Controller
             return direction;
         }
 
-        public XmlNode GetDefalutValue(string nodetype, string tlgmtype)
+        /// <summary>
+        /// GetDefalutValue: return default value defined for specified node type and telegram type
+        /// </summary>
+        /// <param name="nodetype"></param>
+        /// <param name="tlgmtype"></param>
+        /// <returns></returns>
+        public XmlNode GetDefalutValue(string nodetype, string tlgmalias)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
@@ -341,13 +402,13 @@ namespace BHS.PLCSimulator.Controller
                 return null;
 
             XmlNode default_value = null;
-            XElement xelm_dfval = new XElement(TC_TAG_TELEGRAM, new XAttribute(TC_ATTB_TLGMALIAS, tlgmtype));
+            XElement xelm_dfval = new XElement(TC_TAG_TELEGRAM, new XAttribute(TC_ATTB_TLGMALIAS, tlgmalias));
             try
             {
                 var xelm_dfval_parts = from ndtp in this.XELMs_NodeTypes
                                        where ndtp.Name == nodetype
                                        from tlgm in ndtp.Element(XCFG_TELEGRAMS).Elements(XCFG_INDIV_TELEGRAM)
-                                       where tlgm.Element(XCFG_TELEGRAMTYPE).Value == tlgmtype
+                                       where tlgm.Element(XCFG_TELEGRAMALIAS).Value == tlgmalias
                                        select tlgm.Element(XCFG_DEFAULTVALUE).Elements();
 
                 if (xelm_dfval_parts.Any())
@@ -361,6 +422,11 @@ namespace BHS.PLCSimulator.Controller
                     XmlDocument xdfdoc = new XmlDocument();
                     default_value = xdfdoc.ReadNode(xreader);         
                 }
+                else
+                {
+                    errstr += "Cannot find telegram default value. NodeType:" + nodetype + " , TelegramAlias:" + tlgmalias;
+                    _logger.Warn(errstr);
+                }
 
             }
             catch (Exception exp)
@@ -372,6 +438,11 @@ namespace BHS.PLCSimulator.Controller
             return default_value;
         }
 
+        /// <summary>
+        /// GetLocationByNode: return location of this node name
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <returns></returns>
         public string GetLocationByNode(string nodename)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -390,6 +461,11 @@ namespace BHS.PLCSimulator.Controller
                 {
                     location = loc.First<string>();
                 }
+                else
+                {
+                    errstr += "Cannot find node location. Nodename:" + nodename;
+                    _logger.Warn(errstr);
+                }
 
             }
             catch (Exception exp)
@@ -401,6 +477,11 @@ namespace BHS.PLCSimulator.Controller
             return location;
         }
 
+        /// <summary>
+        /// GetTypeByNode: return node type of this node name
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <returns></returns>
         public string GetTypeByNode(string nodename)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -410,14 +491,17 @@ namespace BHS.PLCSimulator.Controller
             try
             {
                 var type = from nd in this.XELMs_Nodes
-                           where nd.Element(XCFG_NODE_NAME) != null
-                           && nd.Element(XCFG_NODE_TYPE) != null
-                           && nd.Element(XCFG_NODE_NAME).Value == nodename
+                           where nd.Element(XCFG_NODE_NAME).Value == nodename
                            select nd.Element(XCFG_NODE_TYPE).Value;
 
                 if (type.Any())
                 {
                     nodetype = type.First<string>();
+                }
+                else
+                {
+                    errstr += "Cannot find node type. Nodename:" + nodename;
+                    _logger.Warn(errstr);
                 }
 
             }
@@ -430,6 +514,12 @@ namespace BHS.PLCSimulator.Controller
             return nodetype;
         }
 
+        /// <summary>
+        /// GetDpndNodeByNode: return all depended nodes belonging to this node
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <param name="dpndtypes"></param>
+        /// <returns></returns>
         public string[] GetDpndNodeByNode(string nodename, out string[] dpndtypes)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -444,20 +534,33 @@ namespace BHS.PLCSimulator.Controller
                                      where nd.Element(XCFG_NODE_NAME) != null
                                      && nd.Element(XCFG_NODE_DEPENDNODE) != null
                                      && nd.Element(XCFG_NODE_NAME).Value == nodename
-                                     select nd.Elements(XCFG_NODE_DEPENDNODE);
+                                     from dpnd in nd.Elements(XCFG_NODE_DEPENDNODE)
+                                     select dpnd;
 
                 if (xelm_dpndnodes.Any())
                 {
                     int cnt = xelm_dpndnodes.Count();
                     dpndnodes = new string[cnt];
                     dpndtypes = new string[cnt];
+                    for (i = 0; i < cnt; i++)
+                    {
+                        dpndnodes[i] = "";
+                        dpndtypes[i] = "";
+                    }
+
                     i = 0;
-                    foreach (XElement dpndnode in xelm_dpndnodes)
+                    foreach (var dpndnode in xelm_dpndnodes)
                     {
                         dpndnodes[i] = dpndnode.Value;
-                        dpndtypes[i] = dpndnode.Attribute(XCFG_ATTB_DPND_TYPE).Value;
+                        if (dpndnode.Attribute(XCFG_ATTB_DPND_TYPE) != null)
+                            dpndtypes[i] = dpndnode.Attribute(XCFG_ATTB_DPND_TYPE).Value;
                         i++;
                     }
+                }
+                else
+                {
+                    errstr += "Cannot find depended node. Nodename:" + nodename;
+                    _logger.Warn(errstr);
                 }
 
             }
@@ -470,18 +573,21 @@ namespace BHS.PLCSimulator.Controller
             return dpndnodes;
         }
 
+        /// <summary>
+        /// XGetFirstNextNode: return the first next node with XElement type of this node
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <returns></returns>
         public XElement XGetFirstNextNode(string nodename)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
 
-            int i;
             XElement firstnextnode = null;
             try
             {
                 var xelm_fnxnd = from nd in this.XELMs_Nodes
-                                 where nd.Element(XCFG_NODE_NAME) != null
-                                 && nd.Element(XCFG_NODE_NAME).Value == nodename
+                                 where nd.Element(XCFG_NODE_NAME).Value == nodename
                                  && nd.Element(XCFG_NEXTNODES) != null
                                  && nd.Element(XCFG_NEXTNODES).Element(XCFG_INDIV_NEXTNODE) != null
                                  select nd.Element(XCFG_NEXTNODES).Element(XCFG_INDIV_NEXTNODE);
@@ -489,6 +595,11 @@ namespace BHS.PLCSimulator.Controller
                 if (xelm_fnxnd.Any())
                 {
                     firstnextnode = xelm_fnxnd.First();
+                }
+                else
+                {
+                    errstr += "Cannot find first next node. Nodename:" + nodename;
+                    _logger.Warn(errstr);
                 }
 
             }
@@ -501,6 +612,11 @@ namespace BHS.PLCSimulator.Controller
             return firstnextnode;
         }
 
+        /// <summary>
+        /// XGetSecureNXND: return the secure next node with XElement type of this node
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <returns></returns>
         public XElement XGetSecureNXND(string nodename)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
@@ -515,12 +631,18 @@ namespace BHS.PLCSimulator.Controller
                                    && nd.Element(XCFG_NEXTNODES) != null
                                    && nd.Element(XCFG_NEXTNODES).Elements(XCFG_INDIV_NEXTNODE).Any() == true
                                    from nxnd in nd.Element(XCFG_NEXTNODES).Elements(XCFG_INDIV_NEXTNODE)
-                                   where nxnd.Attribute(XCFG_ATTB_NXND_ISSECR).Value == PDVAL_IS_TRUE
+                                   where nxnd.Attribute(XCFG_ATTB_NXND_ISSECR) != null
+                                   && nxnd.Attribute(XCFG_ATTB_NXND_ISSECR).Value == PDVAL_IS_TRUE
                                    select nxnd;
 
                 if (xelm_secnxnd.Any())
                 {
                     securenxxd = xelm_secnxnd.First();
+                }
+                else
+                {
+                    errstr += "Cannot get secure next node. Nodename:" + nodename;
+                    _logger.Warn(errstr);
                 }
 
             }
@@ -533,24 +655,252 @@ namespace BHS.PLCSimulator.Controller
             return securenxxd;
         }
 
+        /// <summary>
+        /// XGetNextNode: return the next node with XElement type of this node by specified direction
+        /// </summary>
+        /// <param name="nodename"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
         public XElement XGetNextNode(string nodename, string direction)
         {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            XElement nextnode = null;
+            try
+            {
+                var xelm_nextnode = from nd in this.XELMs_Nodes
+                                    where nd.Element(XCFG_NODE_NAME).Value == nodename
+                                    && nd.Element(XCFG_NEXTNODES).Elements(XCFG_INDIV_NEXTNODE).Any() == true
+                                    from nxnd in nd.Element(XCFG_NEXTNODES).Elements(XCFG_INDIV_NEXTNODE)
+                                    where nxnd.Attribute(XCFG_ATTB_NXND_DIRECTION).Value == direction
+                                    select nxnd;
+
+                if (xelm_nextnode.Any())
+                {
+                    nextnode = xelm_nextnode.First();
+                }
+                else
+                {
+                    errstr += "Cannot get next node. Nodename:" + nodename + " ,Direction:" + direction;
+                    _logger.Warn(errstr);
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return nextnode;
         }
 
+        /// <summary>
+        /// ParseNextNode_Name: Parse the next node XElement to get next node name
+        /// </summary>
+        /// <param name="xnextnode"></param>
+        /// <returns></returns>
         public string ParseNextNode_Name(XElement xnextnode)
         {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string nextnode_name = "";
+            
+            try
+            {
+                if (xnextnode != null && xnextnode.Element(XCFG_NEXTNODE_NAME) != null)
+                    nextnode_name = xnextnode.Element(XCFG_NEXTNODE_NAME).Value;
+                else
+                {
+                    errstr += "Cannot parse next node name.";
+                    _logger.Warn(errstr);
+                }
+                
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            return nextnode_name;
         }
 
+        /// <summary>
+        /// ParseNextNode_isSend: Parse the next node XElement to check whether the telegram shouled be sent before go to next node.
+        /// </summary>
+        /// <param name="xnextnode"></param>
+        /// <returns></returns>
+        public bool ParseNextNode_isSend(XElement xnextnode)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            bool isSend = true;
+
+            try
+            {
+                if (xnextnode != null && xnextnode.Attribute(XCFG_ATTB_NXND_ISSEND) != null)
+                {
+                    if (xnextnode.Element(XCFG_NEXTNODE_NAME).Value == PDVAL_IS_FALSE)
+                        isSend = false;
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            return isSend;
+        }
+
+        /// <summary>
+        /// ParseNextNode_PRDLOC: Parse the next node XElement to get the proceeded location.
+        /// </summary>
+        /// <param name="xnextnode"></param>
+        /// <returns></returns>
         public string ParseNextNode_PRDLOC(XElement xnextnode)
         {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string prdloc = "";
+
+            try
+            {
+                if (xnextnode != null && xnextnode.Element(XCFG_NEXTNODE_PRDLOC) != null)
+                    prdloc = xnextnode.Element(XCFG_NEXTNODE_PRDLOC).Value;
+                else
+                {
+                    errstr += "Cannot parse proceeded location.";
+                    _logger.Warn(errstr);
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            return prdloc;
         }
 
-        public int ParseNextNode_WaitTime(XElement xnextnode)
+        /// <summary>
+        /// ParseNextNode_Distance: Parse the next node XElement to get distance.
+        /// </summary>
+        /// <param name="xnextnode"></param>
+        /// <returns></returns>
+        public string ParseNextNode_Distance(XElement xnextnode)
         {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+   
+            string distance = "";
+            try
+            {
+
+                if (xnextnode != null && xnextnode.Element(XCFG_NEXTNODE_DISTANCE) != null)
+                    distance = xnextnode.Element(XCFG_NEXTNODE_DISTANCE).Value;
+                else
+                {
+                    errstr += "Cannot parse distance.";
+                    _logger.Warn(errstr);
+                    
+                }
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            return distance;
         }
 
-        public string[] GetSpecialTlgm(string nodetype, string tlgmtype, out double rate)
+        /// <summary>
+        /// ParseNextNode_Speed: Parse the next node XElement to get speed.
+        /// </summary>
+        /// <param name="xnextnode"></param>
+        /// <returns></returns>
+        public string ParseNextNode_Speed(XElement xnextnode)
         {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string speed = "";
+            try
+            {
+                if (xnextnode != null && xnextnode.Element(XCFG_NEXTNODE_SPEED) != null)
+                    speed = xnextnode.Element(XCFG_NEXTNODE_SPEED).Value;
+                else
+                {
+                    errstr += "Cannot parse speed.";
+                    _logger.Warn(errstr);
+                }
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            return speed;
+        }
+
+        /// <summary>
+        /// GetSpecialTlgm: Get the special telegrams with specified telegram type(like "random") by node type
+        /// </summary>
+        /// <param name="nodetype"></param>
+        /// <param name="tlgmtype"></param>
+        /// <param name="rate"></param>
+        /// <returns></returns>
+        public string[] GetSpecialTlgm(string nodetype, string tlgmtype, out double[] rate)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string[] tlgmalias = null;
+            rate = null;
+            try
+            {
+                var xelm_tlgms = from ndtp in this.XELMs_NodeTypes
+                                 where ndtp.Name == nodetype
+                                 from tlgm in ndtp.Element(XCFG_TELEGRAMS).Elements(XCFG_INDIV_TELEGRAM)
+                                 where tlgm.Attribute(XCFG_ATTB_NDTP_TLM_TYPE) != null
+                                 && tlgm.Attribute(XCFG_ATTB_NDTP_TLM_TYPE).Value == tlgmtype
+                                 select tlgm;
+
+                if (xelm_tlgms.Any())
+                {
+                    int i = 0;
+                    int cnt = xelm_tlgms.Count();
+                    tlgmalias = new string[cnt];
+                    rate = new double[cnt];
+                    for (i = 0; i < cnt; i++)
+                    {
+                        tlgmalias[i] = "";
+                        rate[i] = -1;
+                    }
+
+                    i = 0;
+                    foreach (var tlgm in xelm_tlgms)
+                    {
+                        tlgmalias[i] = tlgm.Element(XCFG_TELEGRAMALIAS).Value;
+                        if (tlgm.Attribute(XCFG_ATTB_NDTP_TLM_RATE) != null)
+                            rate[i] = double.Parse(tlgm.Attribute(XCFG_ATTB_NDTP_TLM_RATE).Value);
+                        i++;
+                    }
+                }
+                else
+                {
+                }
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+            return tlgmalias;
         }
 
         #endregion

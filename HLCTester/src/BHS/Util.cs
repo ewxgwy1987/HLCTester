@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using System.Xml;
+using System.Collections;
+using System.Data;
+using System.Data.Sql;
+using System.Data.SqlClient;
+
+using PALS.Utilities;
 
 namespace BHS
 {
@@ -10,6 +17,14 @@ namespace BHS
     {
         private static uint m_gid_seed;
         private static Object gidLock = new Object();
+        public static Hashtable HT_Location;
+
+        // The name of current class 
+        private static readonly string _className =
+                    System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString();
+        // Create a logger for use in this class
+        private static readonly log4net.ILog _logger =
+                    log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         static Util()
         {
@@ -32,6 +47,7 @@ namespace BHS
             temp_gid |= month << 28; // 4 bits
 
             m_gid_seed = temp_gid;
+
         }
 
         /// <summary>
@@ -197,6 +213,56 @@ namespace BHS
                 m_gid_seed++;
             }
             return NumericPad(gid.ToString().ToCharArray(), 10);
+        }
+
+        public static bool Init(ref XmlNode xnode_util)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            bool res = true;
+            try
+            {
+                HT_Location = new Hashtable();
+                string connstr = XMLConfig.GetSettingFromInnerText(xnode_util, "connectionString", "");
+                string locsql = XMLConfig.GetSettingFromInnerText(xnode_util, "LocationSql", "");
+
+                // connect to database to retrieve location data
+                DataTable dt_loc = new DataTable();
+                SqlConnection sqlconn = new SqlConnection(connstr);
+                sqlconn.Open();
+                SqlCommand sqlcmd = new SqlCommand(locsql);
+                sqlcmd.Connection = sqlconn;
+                SqlDataReader reader = sqlcmd.ExecuteReader(CommandBehavior.CloseConnection);
+                if(reader.HasRows)
+                    dt_loc.Load(reader);
+                reader.Close();
+                sqlconn.Close();
+
+                if(
+                
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                res = false;
+            }
+
+            return res;
+        }
+
+
+        public static string ConverLocNameToLocID(string location)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+        }
+
+        public static string CovertLocIDToLocName(string location_id)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
         }
     }
 }
