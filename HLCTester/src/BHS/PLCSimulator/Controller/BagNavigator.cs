@@ -21,6 +21,9 @@ namespace BHS.PLCSimulator.Controller
         private XmlHLCTester HLCAnalyser;
         private XmlInput InputAnalyser;
 
+        private Hashtable HT_EventList;
+        private Hashtable HT_DpndNodes;
+
         // The name of current class 
         private static readonly string _className =
                     System.Reflection.MethodBase.GetCurrentMethod().DeclaringType.ToString();
@@ -32,8 +35,39 @@ namespace BHS.PLCSimulator.Controller
 
         #region Class Constructor, Dispose, & Destructor
 
-        public BagNavigator(string xmlHLC_path, string xmlinput_path, string rawdata, XElement entrypoint, Queue sendqueue, Hashtable ht_tlgm)
+        public BagNavigator(string xmlHLC_path, string xmlinput_path, string rawdata, XElement entrypoint, Queue<SAC2PLCTelegram> sendqueue, Hashtable ht_tlgmnodes)
         {
+            HLCAnalyser = new XmlHLCTester(xmlHLC_path);
+            InputAnalyser = new XmlInput(xmlinput_path);
+
+            HT_EventList = new Hashtable();
+            HT_DpndNodes = new Hashtable();
+        }
+
+        public bool Init()
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            bool bres = true;
+            try
+            {
+                // Initiate the HT_DpndNodes
+                string[] dpndnodes = this.HLCAnalyser.GetAllLocDpndNodes();
+
+                // Initiate the HT_EventList
+                
+
+                // 
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                bres = false;
+            }
+            return bres;
         }
 
         ~BagNavigator()
@@ -80,6 +114,10 @@ namespace BHS.PLCSimulator.Controller
                 return dataparts[pos];
             else
                 return "";
+        }
+
+        public void Start()
+        {
         }
 
         #endregion

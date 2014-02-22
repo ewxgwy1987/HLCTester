@@ -281,7 +281,7 @@ namespace BHS.PLCSimulator
                             "\"> is not found in the XML file.");
             }
 
-            if (Util.Init(ref xnode_util))
+            if (Util.Init(xnode_util))
             {
                 _logger.Info("Initialization of Util completed.");
             }

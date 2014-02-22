@@ -27,6 +27,8 @@ namespace BHS.PLCSimulator.Controller
         //The tags used in project
         private const string XCFG_PROJECT = "Project";
         private const string XCFG_NEXTNODE = "NextNode";
+        private const string XCFG_PROJ_BAGSOURCE = "BagSource";
+        private const string XCFG_PROJ_ITLRATE = "LostTrackRate";
 
         //The tags used in input format
         private const string XCFG_INPUTFORMAT = "InputFormat";
@@ -133,6 +135,54 @@ namespace BHS.PLCSimulator.Controller
 
         #region Member Function
 
+        public string GetInputFilePath(string projname, string CLineName)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            try
+            {
+                //if (this.m_XLinqRoot == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT) == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname) == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName) == null)
+                //{
+                //    return null;
+                //}
+
+                return this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName).Element(XCFG_PROJ_BAGSOURCE).Value;
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                return "";
+            }
+        }
+
+        public double GetDefaultITLRate(string projname, string CLineName)
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+            try
+            {
+                //if (this.m_XLinqRoot == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT) == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname) == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName) == null)
+                //{
+                //    return null;
+                //}
+
+                return double.Parse(this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName).Element(XCFG_PROJ_ITLRATE).Value);
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+                return -1;
+            }
+        }
+
         /// <summary>
         /// Get <NextNode> part for specific project name and check-in line name
         /// </summary>
@@ -145,13 +195,13 @@ namespace BHS.PLCSimulator.Controller
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
             try
             {
-                if (this.m_XLinqRoot == null
-                    || this.m_XLinqRoot.Element(XCFG_PROJECT) == null
-                    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname) == null
-                    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName) == null)
-                {
-                    return null;
-                }
+                //if (this.m_XLinqRoot == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT) == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname) == null
+                //    || this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName) == null)
+                //{
+                //    return null;
+                //}
 
                 return this.m_XLinqRoot.Element(XCFG_PROJECT).Element(projname).Element(CLineName).Element(XCFG_NEXTNODE);
             }

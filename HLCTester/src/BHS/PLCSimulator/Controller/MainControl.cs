@@ -51,6 +51,7 @@ namespace BHS.PLCSimulator.Controller
         }
 
         private XElement XEntrypoint;
+        private List<BagNavigator> list_BagNvgs;
 
         private Hashtable HT_TlgmData;
         Queue<SAC2PLCTelegram> msgsend_queue;
@@ -59,6 +60,9 @@ namespace BHS.PLCSimulator.Controller
         private bool mark_thrdrecv;
         private Thread thrd_send;
         private bool mark_thrdsend;
+        private const int SLEEP_INTERVAL = 500;
+
+        private bool init_mark;
 
         // The name of current class 
         private static readonly string _className =
@@ -164,17 +168,124 @@ namespace BHS.PLCSimulator.Controller
             }
         }
 
-        
+        /// <summary>
+        /// Init 
+        /// </summary>
+        /// <returns></returns>
+        public bool Init()
+        {
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            bool bres = true;
+            this.init_mark = false;
+            try
+            {
+                // 1.Find entry point of test
+                XEntrypoint = this.InputAnalyser.GetEntryPoint(this.m_projname, this.m_ckinline);
+                if(XEntrypoint==null || XEntrypoint.ToString()=="")
+                {
+                    errstr += "Cannot find entry point. Project:" + m_projname + ", Checkin Line:" + m_ckinline + "\n";
+                    errstr += "MainControl  initialization failed.";
+                    _logger.Error(errstr);
+                    return false;
+                }
+
+                // 2.Initiate the HT_TlgmData
+                string[] tlgmnodes = this.HLCAnalyser.GetAllTlgmDpndNodes();
+                foreach (string tlgm in tlgmnodes)
+                {
+                    Hashtable ht_newtlgm = new Hashtable();
+                    HT_TlgmData.Add(tlgm, ht_newtlgm);
+                }
+
+                // 3.read input files and import data;
+                string filepath = this.InputAnalyser.GetInputFilePath(this.m_projname, this.m_ckinline);
+                double itlrate = this.InputAnalyser.GetDefaultITLRate(this.m_projname, this.m_ckinline);
+
+                FileInfo inputfile = new FileInfo(filepath);
+                if (inputfile.Exists)
+                {
+                    using (StreamReader sr = inputfile.OpenText())
+                    {
+                        // the first line is column head
+                        string rawdata = sr.ReadLine();
+                        while ((rawdata = sr.ReadLine()) != null)
+                        {
+                            BagNavigator newbag = new BagNavigator(this.m_path_HLCXml, this.m_path_InputXml, rawdata, this.XEntrypoint, this.msgsend_queue, this.HT_TlgmData);
+                            this.list_BagNvgs.Add(newbag);
+                        }
+                    }
+                }
+                else
+                {
+                    errstr += "Cannot find input file. File Path:" + filepath + ", Project:" + m_projname + ", Checkin Line:" + m_ckinline + "\n";
+                    errstr += "MainControl  initialization failed.";
+                    _logger.Error(errstr);
+                    return false;
+                }
+
+                // 4.create receiving and sending threads
+                this.thrd_send = new Thread(ThrdFun_SendMsg);
+                this.thrd_send.IsBackground=true;
+                this.thrd_send.Start();
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString() + "\n";
+                errstr += "MainControl  initialization failed.";
+                _logger.Error(errstr);
+                bres = false;
+            }
+            this.init_mark = true;
+            _logger.Info("MainControl is initialized successfully.");
+            return bres;
+        }
 
         #endregion
 
         #region Member Function
 
-        public bool Init()
+       
+        /// <summary>
+        /// Begin Test for each bag in the input file
+        /// </summary>
+        public void BeginTest()
         {
-            // Find entry point of test
-            XEntrypoint = this.InputAnalyser.GetEntryPoint(this.m_projname, this.m_ckinline);
-            return true;
+            string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
+            string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            if (this.init_mark == true)
+            {
+                foreach (BagNavigator bagnvg in this.list_BagNvgs)
+                {
+                    bagnvg.Start();
+                }
+            }
+            else
+            {
+                errstr += "MailControl is not init. So cannot begin test.";
+                _logger.Error(errstr);
+            }
+        }
+
+        private void ThrdFun_SendMsg()
+        {
+            while (this.mark_thrdsend)
+            {
+                if (this.msgsend_queue.Peek() != null)
+                {
+                    SAC2PLCTelegram sendtlgm = this.msgsend_queue.Dequeue();
+                    //_init.MsgHandler.SentToGW(sendtlgm.RawData);
+                }
+                Thread.Sleep(SLEEP_INTERVAL);
+            }
+        }
+
+        public bool ReceiveTelegram(MessageEventArgs e)
+        {
+
         }
 
         #endregion

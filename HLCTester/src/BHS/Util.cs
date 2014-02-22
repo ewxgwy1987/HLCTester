@@ -17,7 +17,8 @@ namespace BHS
     {
         private static uint m_gid_seed;
         private static Object gidLock = new Object();
-        public static Hashtable HT_Location;
+        public static Hashtable HT_LocToLocid;
+        public static Hashtable HT_LocidToLoc;
 
         // The name of current class 
         private static readonly string _className =
@@ -215,15 +216,19 @@ namespace BHS
             return NumericPad(gid.ToString().ToCharArray(), 10);
         }
 
-        public static bool Init(ref XmlNode xnode_util)
+        public static bool HTInit(XmlNode xnode_util)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
 
+            string colname_loc = "LOCATION";
+            string colname_locid = "LOCATION_ID";
+
             bool res = true;
             try
             {
-                HT_Location = new Hashtable();
+                HT_LocToLocid = new Hashtable();
+                HT_LocidToLoc = new Hashtable();
                 string connstr = XMLConfig.GetSettingFromInnerText(xnode_util, "connectionString", "");
                 string locsql = XMLConfig.GetSettingFromInnerText(xnode_util, "LocationSql", "");
 
@@ -234,21 +239,69 @@ namespace BHS
                 SqlCommand sqlcmd = new SqlCommand(locsql);
                 sqlcmd.Connection = sqlconn;
                 SqlDataReader reader = sqlcmd.ExecuteReader(CommandBehavior.CloseConnection);
-                if(reader.HasRows)
+                if (reader.HasRows)
                     dt_loc.Load(reader);
                 reader.Close();
                 sqlconn.Close();
 
-                if(
-                
+                string loc, locid;
+                if (dt_loc.Rows.Count > 0)
+                {
+                    foreach (DataRow dr in dt_loc.Rows)
+                    {
+                        loc = string.Empty;
+                        locid = string.Empty;
+                        if (dr.Table.Columns[colname_loc] != null && dr.Table.Columns[colname_locid] != null)
+                        {
+                            if (dr[colname_loc] != DBNull.Value && dr[colname_locid] != DBNull.Value)
+                            {
+                                loc = dr[colname_loc].ToString();
+                                locid = dr[colname_locid].ToString();
+                            }
+                            else if (dr[colname_loc] != DBNull.Value && dr[colname_locid] == DBNull.Value)
+                            {
+                                loc = dr[colname_loc].ToString();
+                                locid = dr[colname_loc].ToString();
+                            }
+                        }
+                        else if (dr.Table.Columns[colname_loc] != null && dr.Table.Columns[colname_locid] == null)
+                        {
+                            if (dr[colname_loc] != DBNull.Value)
+                            {
+                                loc = dr[colname_loc].ToString();
+                                locid = dr[colname_loc].ToString();
+                            }
+                        }
+
+                        if (loc != string.Empty && locid != string.Empty)
+                        {
+                            HT_LocidToLoc.Add(locid, loc);
+                            HT_LocToLocid.Add(loc, locid);
+                        }
+                    }
+                }
+                else
+                {
+                    errstr += "Cannot Find location data from database.";
+                    _logger.Error(errstr);
+                    res = false;
+                }
+
             }
             catch (Exception exp)
             {
                 errstr += exp.ToString();
                 _logger.Error(errstr);
-                res = false;
+                return false;
             }
 
+            return res;
+        }
+
+        public static bool Init(XmlNode xnode_util)
+        {
+            bool res = true;
+            res &= HTInit(xnode_util);
             return res;
         }
 
@@ -257,12 +310,51 @@ namespace BHS
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string conv_locid = location;
+            try
+            {
+                if (HT_LocToLocid.ContainsKey(location))
+                    conv_locid = HT_LocToLocid[location] as string;
+                else
+                {
+                    errstr += "Unknown Location:" + location;
+                    _logger.Warn(errstr);
+                }
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return conv_locid;
         }
 
         public static string CovertLocIDToLocName(string location_id)
         {
             string thisMethod = _className + "." + System.Reflection.MethodBase.GetCurrentMethod().Name + "()";
             string errstr = "Class:[" + _className + "]" + "Method:<" + thisMethod + ">\n";
+
+            string conv_loc = location_id;
+            try
+            {
+                if (HT_LocidToLoc.ContainsKey(location_id))
+                    conv_loc = HT_LocidToLoc[location_id] as string;
+                else
+                {
+                    errstr += "Unknown LocationID:" + location_id;
+                    _logger.Warn(errstr);
+                }
+
+            }
+            catch (Exception exp)
+            {
+                errstr += exp.ToString();
+                _logger.Error(errstr);
+            }
+
+            return conv_loc;
         }
     }
 }
